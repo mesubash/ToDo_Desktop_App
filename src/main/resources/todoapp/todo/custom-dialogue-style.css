@@ -1,0 +1,4 @@
+.custom-dialog .header-panel {
+    visibility: hidden;
+    -fx-padding: 0;
+}
