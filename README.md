@@ -10,6 +10,7 @@ I have used fxml for the layout design using the SceneBuilder tools that helped 
 the UI.
 I have referenced the logic from websites and the AI tools like openai. 
 
+*Design is not responsive and it is currently well working in 14'. So may feel some layout mistaked
 
 
 Here, in the project I have used just simple logic and some components are still not developed due to lack of time.
