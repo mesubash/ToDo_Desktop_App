@@ -33,3 +33,4 @@ Layout design: SceneBuilder
 Database: MySQL
 
 
+* make sure you have used the proper external library files like mysql connector etc
