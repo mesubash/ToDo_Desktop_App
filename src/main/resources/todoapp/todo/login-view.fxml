@@ -7,6 +7,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
@@ -25,12 +26,15 @@
                 <Font name="Tw Cen MT" size="30.0" />
             </font>
         </Text>
-        <TextField fx:id="usernameField" alignment="CENTER" layoutX="189.0" layoutY="136.0" prefHeight="33.0" prefWidth="222.0" promptText="email/username" style="-fx-border-color: #7d2ae8;">
+        <TextField fx:id="usernameField" layoutX="189.0" layoutY="136.0" prefHeight="33.0" prefWidth="222.0" promptText="username" style="-fx-border-color: #7d2ae8;">
             <cursor>
                 <Cursor fx:constant="TEXT" />
             </cursor>
         </TextField>
-        <PasswordField fx:id="passwordField" alignment="CENTER" layoutX="190.0" layoutY="198.0" prefHeight="25.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" />
+        <PasswordField fx:id="passwordField" layoutX="190.0" layoutY="198.0" prefHeight="25.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></PasswordField>
         <RadioButton layoutX="190.0" layoutY="237.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="112.0" text="Remember me" textFill="#7d2ae8">
             <font>
                 <Font name="Segoe UI" size="10.0" />
@@ -57,5 +61,10 @@
             </font>
         </Hyperlink>
       <TextFlow layoutX="448.0" prefHeight="60.0" prefWidth="152.0" textAlignment="RIGHT" />
+      <ToggleButton fx:id="passwordShow" layoutX="379.0" layoutY="199.0" mnemonicParsing="false" onAction="#setPasswordShow" prefHeight="26.0" prefWidth="35.0" style="-fx-background-color: #7d2ae8;" text="show" textFill="WHITE">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </ToggleButton>
     </children>
 </Pane>
