@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="rootHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="704.0" prefWidth="1315.0" styleClass="todo-login" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.MainController">
+<HBox fx:id="rootHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1282.0" styleClass="todo-login" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.MainController">
 
     <children>
         <AnchorPane depthTest="DISABLE" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="203.0" style="-fx-background-color: lightgrey;">
@@ -37,7 +37,7 @@
                 <Separator layoutX="2.0" layoutY="194.0" prefHeight="11.0" prefWidth="183.0" />
                 <ButtonBar accessibleRole="BUTTON" layoutX="2.0" layoutY="156.0" onMouseClicked="#setSelectedfieldshowI" prefHeight="40.0" prefWidth="183.0">
                     <buttons>
-                        <Label fx:id="importantTaskButton"  contentDisplay="CENTER" prefHeight="18.0" prefWidth="146.0" text="Important Tasks">
+                        <Label fx:id="importantTaskButton" contentDisplay="CENTER" prefHeight="18.0" prefWidth="146.0" text="Important Tasks">
                             <font>
                                 <Font size="16.0" />
                             </font>
@@ -70,9 +70,9 @@
         </AnchorPane>
         <SplitPane orientation="VERTICAL" prefHeight="1080.0" prefWidth="1117.0">
             <items>
-                <AnchorPane fx:id="loginPane" minHeight="0.0" minWidth="0.0" prefHeight="1077.0" prefWidth="1117.0">
+                <AnchorPane fx:id="loginPane" minHeight="0.0" minWidth="0.0" prefHeight="678.0" prefWidth="1118.0">
                     <children>
-                        <ToolBar fx:id="toolBar" layoutX="-18.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="1091.0" style="-fx-background-color: #708090;">
+                        <ToolBar fx:id="toolBar" layoutX="-12.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="1097.0" style="-fx-background-color: #708090;">
                             <items>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -85,7 +85,7 @@
                            </font></Label>
                             </items>
                         </ToolBar>
-                  <AnchorPane layoutY="54.0" prefHeight="54.0" prefWidth="1073.0" style="-fx-background-color: lightgrey;">
+                  <AnchorPane layoutY="54.0" prefHeight="54.0" prefWidth="1087.0" style="-fx-background-color: lightgrey;">
                      <children>
                         <Label fx:id="selectedfieldshow" alignment="BASELINE_CENTER" contentDisplay="TEXT_ONLY" layoutX="386.0" layoutY="11.0" prefHeight="31.0" prefWidth="261.0" text="Tasks" textFill="#81139f">
                            <font>
@@ -94,7 +94,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                        <ScrollPane fx:id="tasksScrollPane" layoutX="5.0" layoutY="115.0" prefHeight="586.0" prefWidth="1064.0">
+                        <ScrollPane fx:id="tasksScrollPane" layoutX="5.0" layoutY="115.0" prefHeight="586.0" prefWidth="1074.0">
 
                         <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0">

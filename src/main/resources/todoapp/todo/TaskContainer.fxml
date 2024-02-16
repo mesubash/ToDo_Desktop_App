@@ -7,8 +7,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="taskContainer" prefHeight="84.0" prefWidth="1062.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.TaskContainerController">
-    <Label fx:id="taskLabel" contentDisplay="CENTER" prefHeight="119.0" prefWidth="835.0" text="Description">
+<HBox fx:id="taskContainer" prefHeight="84.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.TaskContainerController">
+    <Label fx:id="taskLabel" contentDisplay="CENTER" prefHeight="84.0" prefWidth="822.0" text="Description">
       <font>
          <Font size="16.0" />
       </font>
