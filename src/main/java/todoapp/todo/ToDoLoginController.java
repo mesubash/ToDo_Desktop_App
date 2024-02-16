@@ -6,26 +6,34 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.InputStream;
 import java.sql.ResultSet;
 
 import static javafx.scene.paint.Color.*;
 
+
+
 public class ToDoLoginController {
 
+
     @FXML
-    public HBox rootHBox;
+    private ImageView iconField;
+    @FXML
+    private ToggleButton passwordShow;
 
     @FXML
     private TextField usernameField;
+    @FXML
+    private TextField visiblePasswordField;
+
 
 
 
@@ -39,6 +47,8 @@ public class ToDoLoginController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
+
 
 
     @FXML
@@ -55,8 +65,7 @@ public class ToDoLoginController {
                 u.setU_id(resultSet.getInt("u_id"));
                 mainApp.showMainScene();
                 showSuccess();
-
-
+//                initialize();
 
 
             } else {
@@ -155,4 +164,44 @@ public class ToDoLoginController {
     }
 
 
+
+
+    @FXML
+    private void setPasswordShow() {
+        passwordShow.setSelected(passwordShow.isSelected()); // Invert the selection
+        updateToggleButtonIcon();
+    }
+
+    private void updateToggleButtonIcon() {
+        Image icon;
+        if (passwordShow.isSelected()) {
+            // Use the hide icon
+            icon = new Image(getClass().getResource("/todoapp/todo/eye-off.png").toExternalForm());
+            if (icon != null) {
+                passwordField.setVisible(false);
+                visiblePasswordField.setVisible(true);
+                visiblePasswordField.setText(passwordField.getText());
+            } else {
+                System.out.println("image not found");
+
+            }
+        } else {
+            // Use the show icon
+            icon = new Image(getClass().getResource("/todoapp/todo/eye.png").toExternalForm());
+            if (icon != null) {
+                passwordField.setVisible(true);
+                visiblePasswordField.setVisible(false);
+            } else {
+                System.out.println("image not found");
+            }
+        }
+        if (iconField != null) {
+            iconField.setImage(icon);
+        }
+
+
+    }
+
+
 }
+

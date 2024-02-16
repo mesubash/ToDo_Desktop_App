@@ -8,11 +8,12 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
 <Pane fx:id="rootPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" snapToPixel="false" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.ToDoLoginController">
     <children>
@@ -31,10 +32,12 @@
                 <Cursor fx:constant="TEXT" />
             </cursor>
         </TextField>
-        <PasswordField fx:id="passwordField" layoutX="190.0" layoutY="198.0" prefHeight="25.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;">
-         <opaqueInsets>
+        <PasswordField fx:id="passwordField" layoutX="190.0" layoutY="193.0" prefHeight="33.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" />
+        <TextField fx:id="visiblePasswordField" layoutX="190.0" layoutY="193.0" prefHeight="33.0" prefWidth="222.0" style="-fx-border-color: #7d2ae8;" visible="false">
+
+        <opaqueInsets>
             <Insets />
-         </opaqueInsets></PasswordField>
+         </opaqueInsets></TextField>
         <RadioButton layoutX="190.0" layoutY="237.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="112.0" text="Remember me" textFill="#7d2ae8">
             <font>
                 <Font name="Segoe UI" size="10.0" />
@@ -60,11 +63,15 @@
                 <Font name="Segoe Script" size="11.0" />
             </font>
         </Hyperlink>
-      <TextFlow layoutX="448.0" prefHeight="60.0" prefWidth="152.0" textAlignment="RIGHT" />
-      <ToggleButton fx:id="passwordShow" layoutX="379.0" layoutY="199.0" mnemonicParsing="false" onAction="#setPasswordShow" prefHeight="26.0" prefWidth="35.0" style="-fx-background-color: #7d2ae8;" text="show" textFill="WHITE">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </ToggleButton>
+        <ToggleButton fx:id="passwordShow" layoutX="379.0" layoutY="198.0" mnemonicParsing="false" onMouseClicked="#setPasswordShow" prefHeight="20.0" prefWidth="24.0" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@eye.png" />
+               </image>
+            </ImageView>
+         </graphic></ToggleButton>
+
+
     </children>
 </Pane>

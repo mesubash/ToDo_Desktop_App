@@ -76,7 +76,7 @@
                             <items>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                               <Image url="@/verified_user.jpg" />
+                               <Image url="@verified_user.jpg" />
                            </image>
                         </ImageView>
                         <Label fx:id="topusernameField" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="27.0" prefWidth="129.0" text="username" textFill="#7701aa" wrapText="true">

@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -28,10 +29,9 @@ public class MainApp extends Application {
             ToDoLoginController loginController = loader.getController();
             loginController.setMainApp(this);
 
-            // Set ToDoLoginController reference in MainController if needed
-
             Scene scene = new Scene(root);
             primaryStage.setResizable(false);
+
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("ToDo App - Login");
@@ -50,8 +50,9 @@ public class MainApp extends Application {
             MainController mainController = loader.getController();
             mainController.setMainApp(this);
             Scene scene = new Scene(root);
+
             primaryStage.setMaximized(true);
-//            primaryStage.setResizable(false);
+            primaryStage.setResizable(false);
 
             primaryStage.setScene(scene);
             primaryStage.setTitle("ToDo App - Main");
