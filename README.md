@@ -23,6 +23,8 @@ before running this make sure that your have turned on the localserver like Xamp
 with necessary fields out there. I have given the table schemas out there under the resources.
 Feel free to make changes for the betterment of the application.
 
+I have included the dummy register and forgot password scenes just to make the buttons and links fromlogin scene working,
+you can design and make necessary changes to make them working.
 
 In Short:
 Tools:
