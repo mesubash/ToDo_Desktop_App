@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class MainApp extends Application {
 
     private Stage primaryStage;
@@ -63,6 +65,45 @@ public class MainApp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void showForgetPasswordScene(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPassword.fxml"));
+            Parent root = loader.load();
+
+            ToDoLoginController loginController = loader.getController();
+            loginController.setMainApp(this);
+
+            Scene scene = new Scene(root);
+            primaryStage.setResizable(false);
+
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Forget Password");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void showRegisterScene(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
+            Parent root = loader.load();
+
+            ToDoLoginController loginController = loader.getController();
+            loginController.setMainApp(this);
+
+            Scene scene = new Scene(root);
+            primaryStage.setResizable(false);
+
+
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Register User");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
     public Stage getPrimaryStage() {
         return primaryStage;

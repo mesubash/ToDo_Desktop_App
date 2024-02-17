@@ -34,7 +34,7 @@
             </cursor>
         </TextField>
         <PasswordField fx:id="passwordField" layoutX="191.0" layoutY="187.0" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" />
-        <TextField fx:id="visiblePasswordField" layoutX="191.0" layoutY="186.0" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" style="-fx-border-color: #7d2ae8;" promptText="password" visible="false">
+        <TextField fx:id="visiblePasswordField" layoutX="191.0" layoutY="186.0" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" visible="false">
 
         <opaqueInsets>
             <Insets />
@@ -44,7 +44,7 @@
                 <Font name="Segoe UI" size="10.0" />
             </font>
         </RadioButton>
-        <Hyperlink layoutX="332.0" layoutY="245.0" text="forgot password?" textFill="#7d2ae8" underline="true">
+        <Hyperlink layoutX="332.0" layoutY="245.0" onAction="#handleForgetPassword" text="forgot password?" textFill="#7d2ae8" underline="true">
             <font>
                 <Font name="Segoe UI Symbol" size="10.0" />
             </font>
@@ -59,7 +59,7 @@
                 <Font name="Segoe Script" size="11.0" />
             </font>
         </Text>
-        <Hyperlink layoutX="338.0" layoutY="312.0" text="Register now" textFill="#7d2ae8" underline="true">
+        <Hyperlink layoutX="338.0" layoutY="312.0" onAction="#handleRegister" text="Register now" textFill="#7d2ae8" underline="true">
             <font>
                 <Font name="Segoe Script" size="11.0" />
             </font>

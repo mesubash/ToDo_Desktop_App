@@ -101,6 +101,20 @@ public class ToDoLoginController {
         }
     }
 
+    @FXML
+    private void handleForgetPassword(){
+        mainApp.showForgetPasswordScene();
+
+    }
+    @FXML
+    private void gobackHandle(){
+        mainApp.showLoginScene();
+    }
+    @FXML
+    private void handleRegister(){
+        mainApp.showRegisterScene();
+    }
+
 
 
     private void showSuccess(){
