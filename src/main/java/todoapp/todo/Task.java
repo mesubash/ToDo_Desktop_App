@@ -2,6 +2,7 @@ package todoapp.todo;
 
 import javafx.scene.Node;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static javafx.scene.layout.GridPane.setConstraints;
@@ -10,6 +11,14 @@ public class Task extends Node {
 
     private String description;
     private int task_id;
+    private LocalDateTime tasktime;
+    public void setTasktime(LocalDateTime tasktime){
+        this.tasktime=tasktime;
+    }
+    public LocalDateTime getTasktime(){
+        return  tasktime;
+    }
+
 
     private Boolean important;
     private Boolean completed;

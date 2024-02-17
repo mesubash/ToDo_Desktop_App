@@ -48,6 +48,7 @@ public class TaskHandler {
                 task.setDescription(resultSet.getString("task_description"));
                 task.setImportant(resultSet.getBoolean("important"));
                 task.setCompleted(resultSet.getBoolean("completed"));
+                task.setTasktime(resultSet.getTimestamp("created_at").toLocalDateTime());
 
                 tasks.add(task);
             }

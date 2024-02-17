@@ -14,10 +14,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 public class TaskContainerController {
     @FXML
     private Label taskLabel;
+    @FXML
+    private Label tasktime;
 
 
     @FXML
@@ -43,10 +48,17 @@ public class TaskContainerController {
         completedCheckbox.setSelected(task.isCompleted());
         importantCheckbox.setSelected(task.isImportant());
 
+        LocalDateTime timestamp = task.getTasktime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // adjust the pattern as needed
+        String formattedTimestamp = timestamp.format(formatter);
+
+        tasktime.setText("created at: "+formattedTimestamp);
+
 
         if (task.isCompleted()) {
             // Set color to green for completed tasks
             taskContainer.setStyle("-fx-background-color: green;");
+            tasktime.setStyle("-fx-text-fill: white");
             taskContainer.getChildren().forEach(child -> {
                 if (child instanceof Label) {
                     ((Label) child).setTextFill(Color.WHITE);
@@ -56,6 +68,8 @@ public class TaskContainerController {
         } else if (task.isImportant()) {
             // Set color to purple for important tasks
             taskContainer.setStyle("-fx-background-color: #7d2ae8;-fx-text-fill: white;");
+            tasktime.setStyle("-fx-text-fill: white");
+
             taskContainer.getChildren().forEach(child -> {
                 if (child instanceof Label) {
                     ((Label) child).setTextFill(Color.WHITE);
@@ -64,6 +78,8 @@ public class TaskContainerController {
         } else {
             // Reset the background color to the default for other tasks
             taskContainer.setStyle("-fx-background-color:white;");
+            tasktime.setStyle("-fx-text-fill: #4A5F96");
+
             taskContainer.getChildren().forEach(child -> {
                 if (child instanceof Label) {
                     ((Label) child).setTextFill(Color.BLACK);

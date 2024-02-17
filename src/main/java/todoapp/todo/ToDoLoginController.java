@@ -13,8 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.io.InputStream;
 import java.sql.ResultSet;
 
 import static javafx.scene.paint.Color.*;
