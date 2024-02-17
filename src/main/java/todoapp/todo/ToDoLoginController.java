@@ -35,8 +35,6 @@ public class ToDoLoginController {
     private TextField visiblePasswordField;
 
 
-
-
     @FXML
     private PasswordField passwordField;
 
@@ -55,30 +53,45 @@ public class ToDoLoginController {
     private void handleLoginButtonAction() {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String npassword = visiblePasswordField.getText();
 
         try {
-            ResultSet resultSet=LoginValidator.validateLogin(username, password);
+            String validate=ClientSideValidator.validate(usernameField,passwordField,visiblePasswordField);
 
-            if (resultSet.next()) {
-                User u = new User();  // Instantiate the User object
-                u.setUsername(resultSet.getString("username"));
-                u.setU_id(resultSet.getInt("u_id"));
-                mainApp.showMainScene();
-                showSuccess();
-//                initialize();
+            if(validate.equalsIgnoreCase("true")){
+
+                ResultSet resultSet=LoginValidator.validateLogin(username, password,npassword);
+
+                if (resultSet.next()) {
+                    User u = new User();  // Instantiate the User object
+                    u.setUsername(resultSet.getString("username"));
+                    u.setU_id(resultSet.getInt("u_id"));
+                    mainApp.showMainScene();
+                    showSuccess();
 
 
-            } else {
+
+                } else {
 
 
-                // Clear the password field on unsuccessful login
-                usernameField.setStyle("-fx-border-color: red");
-                passwordField.setStyle("-fx-border-color: red");
-                usernameField.clear();
-                passwordField.clear();
-                showError("! Invalid credentials");
+                    // Clear the password field on unsuccessful login
+                    usernameField.setStyle("-fx-border-color: red");
+                    passwordField.setStyle("-fx-border-color: red");
+                    usernameField.clear();
+                    passwordField.clear();
+                    showError("! Invalid credentials");
+
+                }
 
             }
+            if(validate.equalsIgnoreCase("unameEmpty")){
+
+            }
+            if(validate.equalsIgnoreCase("passwordEmpty")){
+
+            }
+
+
         } catch (Exception e) {
             // Log the exception or show an error message to the user
             e.printStackTrace();
