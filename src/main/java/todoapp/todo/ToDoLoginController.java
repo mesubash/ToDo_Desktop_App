@@ -52,7 +52,6 @@ public class ToDoLoginController {
 
     @FXML
     private void handleLoginButtonAction() {
-
         String username = usernameField.getText();
         String password = passwordField.getText();
         String npassword = visiblePasswordField.getText();
@@ -60,7 +59,7 @@ public class ToDoLoginController {
         try {
             String[] validationResults = ClientSideValidator.validate(usernameField, passwordField, visiblePasswordField);
 
-            if (validationResults[0].equalsIgnoreCase("true")) {
+            if (validationResults[0] != null && validationResults[0].equalsIgnoreCase("true")) {
                 ResultSet resultSet = LoginValidator.validateLogin(username, password, npassword);
 
                 if (resultSet.next()) {
@@ -77,27 +76,26 @@ public class ToDoLoginController {
                     passwordField.clear();
                     showError("! Invalid credentials");
                 }
+            } else {
+                // Handle empty fields based on the validation results
+                if ("unameEmpty".equalsIgnoreCase(validationResults[0])) {
+                    usererr.setText("* username cannot be empty");
+                    usererr.setVisible(true);
+                }
+
+                if ("passwordEmpty".equalsIgnoreCase(validationResults[1])) {
+                    passworderr.setText("* password cannot be empty");
+                    passworderr.setVisible(true);
+                }
             }
-
-           if(validationResults[0]!=null){
-               if (validationResults[0].equalsIgnoreCase("unameEmpty")) {
-                   usererr.setText("* username cannot be empty");
-                   usererr.setVisible(true);
-               }
-           }
-           if(validationResults[1]!=null){
-               if (validationResults[1].equalsIgnoreCase("passwordEmpty")) {
-                   passworderr.setText("* password cannot be empty");
-                   passworderr.setVisible(true);
-               }
-           }
-
 
         } catch (Exception e) {
             // Log the exception or show an error message to the user
             e.printStackTrace();
         }
     }
+
+
 
     private void showSuccess(){
         Stage primaryStage = mainApp.getPrimaryStage();

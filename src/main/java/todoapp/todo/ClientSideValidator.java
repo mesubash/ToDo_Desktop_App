@@ -15,15 +15,12 @@ public class ClientSideValidator {
             result[1] = "passwordEmpty";
         }
 
-        if (result[0] != null || result[1] != null) {
-            // Either username or password is empty
-            return result;
+        // Check if there are any errors
+        if (result[0] == null && result[1] == null) {
+            // No errors, set "true"
+            result[0] = "true";
         }
 
-        // Both username and password are not empty
-        result[0] = "true";
         return result;
     }
-
-
 }
