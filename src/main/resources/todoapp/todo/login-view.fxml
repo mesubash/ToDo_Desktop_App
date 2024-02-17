@@ -65,12 +65,13 @@
         </Hyperlink>
         <ToggleButton fx:id="passwordShow" layoutX="379.0" layoutY="198.0" mnemonicParsing="false" onMouseClicked="#setPasswordShow" prefHeight="20.0" prefWidth="24.0" style="-fx-background-color: transparent;">
          <graphic>
-            <ImageView fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="iconField" fitHeight="16.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#setPasswordShow">
                <image>
                   <Image url="@eye.png" />
                </image>
             </ImageView>
-         </graphic></ToggleButton>
+         </graphic>
+        </ToggleButton>
 
 
     </children>

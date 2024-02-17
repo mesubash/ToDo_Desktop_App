@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="dd4f5a09-8734-4be0-9944-c0430776f916" name="todo_desktop_app Mapping">
+      <data-sources db="43720f6f-45cd-4919-b531-425812b0d6d1" />
+      <scope>
+        <node kind="database" negative="1" />
+      </scope>
+    </mapping>
+  </component>
+</project>

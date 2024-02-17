@@ -99,6 +99,9 @@ public class TaskHandler {
             return 0;
         }
     }
+
+    //no any use of this update task description section currently bt can be used in future for the use of edit feature of the task
+
     public static int updateTaskDescription(int taskId, String newDescription) {
         try {
             Connection connection = DatabaseConnection.getConnection();

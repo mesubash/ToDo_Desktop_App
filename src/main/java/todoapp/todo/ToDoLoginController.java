@@ -168,35 +168,47 @@ public class ToDoLoginController {
 
     @FXML
     private void setPasswordShow() {
-        passwordShow.setSelected(passwordShow.isSelected()); // Invert the selection
+//        System.out.println(passwordShow.isSelected());
+        passwordShow.setSelected(passwordShow.isSelected());
         updateToggleButtonIcon();
     }
 
     private void updateToggleButtonIcon() {
         Image icon;
         if (passwordShow.isSelected()) {
+
             // Use the hide icon
             icon = new Image(getClass().getResource("/todoapp/todo/eye-off.png").toExternalForm());
-            if (icon != null) {
-                passwordField.setVisible(false);
-                visiblePasswordField.setVisible(true);
-                visiblePasswordField.setText(passwordField.getText());
+            if (icon != null ) {
+
+                    passwordField.setVisible(false);
+                    visiblePasswordField.setVisible(true);
+                    visiblePasswordField.setText(passwordField.getText());
+                    iconField.setImage(icon);
+
+
+
             } else {
-                System.out.println("image not found");
+                System.out.println("Image not found: /todoapp/todo/eye.png");
 
             }
+
+
         } else {
             // Use the show icon
             icon = new Image(getClass().getResource("/todoapp/todo/eye.png").toExternalForm());
             if (icon != null) {
                 passwordField.setVisible(true);
+                passwordField.setText(visiblePasswordField.getText());
                 visiblePasswordField.setVisible(false);
+
+                iconField.setImage(icon);
+
             } else {
-                System.out.println("image not found");
+                System.out.println("Image not found: /todoapp/todo/eye.png");
             }
-        }
-        if (iconField != null) {
-            iconField.setImage(icon);
+
+
         }
 
 
