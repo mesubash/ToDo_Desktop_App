@@ -23,7 +23,6 @@ import static javafx.scene.paint.Color.*;
 
 public class ToDoLoginController {
 
-
     @FXML
     private ImageView iconField;
     @FXML
@@ -40,56 +39,60 @@ public class ToDoLoginController {
 
     private MainApp mainApp;
     @FXML
-    private Label topusernameField;
+    private Label usererr;
+    @FXML
+    private  Label passworderr;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-
-
-
+    @FXML
+    private void resetError(){
+        passworderr.setVisible(false);
+        usererr.setVisible(false);
+    }
 
     @FXML
     private void handleLoginButtonAction() {
+
         String username = usernameField.getText();
         String password = passwordField.getText();
         String npassword = visiblePasswordField.getText();
 
         try {
-            String validate=ClientSideValidator.validate(usernameField,passwordField,visiblePasswordField);
+            String[] validationResults = ClientSideValidator.validate(usernameField, passwordField, visiblePasswordField);
 
-            if(validate.equalsIgnoreCase("true")){
-
-                ResultSet resultSet=LoginValidator.validateLogin(username, password,npassword);
+            if (validationResults[0].equalsIgnoreCase("true")) {
+                ResultSet resultSet = LoginValidator.validateLogin(username, password, npassword);
 
                 if (resultSet.next()) {
-                    User u = new User();  // Instantiate the User object
+                    User u = new User();
                     u.setUsername(resultSet.getString("username"));
                     u.setU_id(resultSet.getInt("u_id"));
                     mainApp.showMainScene();
                     showSuccess();
-
-
-
                 } else {
-
-
                     // Clear the password field on unsuccessful login
                     usernameField.setStyle("-fx-border-color: red");
                     passwordField.setStyle("-fx-border-color: red");
                     usernameField.clear();
                     passwordField.clear();
                     showError("! Invalid credentials");
-
                 }
-
             }
-            if(validate.equalsIgnoreCase("unameEmpty")){
 
-            }
-            if(validate.equalsIgnoreCase("passwordEmpty")){
-
-            }
+           if(validationResults[0]!=null){
+               if (validationResults[0].equalsIgnoreCase("unameEmpty")) {
+                   usererr.setText("* username cannot be empty");
+                   usererr.setVisible(true);
+               }
+           }
+           if(validationResults[1]!=null){
+               if (validationResults[1].equalsIgnoreCase("passwordEmpty")) {
+                   passworderr.setText("* password cannot be empty");
+                   passworderr.setVisible(true);
+               }
+           }
 
 
         } catch (Exception e) {
@@ -97,6 +100,7 @@ public class ToDoLoginController {
             e.printStackTrace();
         }
     }
+
     private void showSuccess(){
         Stage primaryStage = mainApp.getPrimaryStage();
 
