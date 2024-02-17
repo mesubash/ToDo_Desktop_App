@@ -11,7 +11,8 @@ public class ClientSideValidator {
             result[0] = "unameEmpty";
         }
 
-        if (passwordField == null || passwordField.getText().isEmpty()) {
+        if ((passwordField == null || passwordField.getText().isEmpty())
+                && (npassword ==null || npassword.getText().isEmpty())) {
             result[1] = "passwordEmpty";
         }
 

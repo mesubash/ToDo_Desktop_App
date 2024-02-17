@@ -48,6 +48,10 @@ public class ToDoLoginController {
     private void resetError(){
         passworderr.setVisible(false);
         usererr.setVisible(false);
+        passwordField.setStyle("-fx-border-color:#7d2ae8");
+        usernameField.setStyle("-fx-border-color:#7d2ae8");
+        visiblePasswordField.setStyle("-fx-border-color: #7d2ae8");
+
     }
 
     @FXML
@@ -72,8 +76,10 @@ public class ToDoLoginController {
                     // Clear the password field on unsuccessful login
                     usernameField.setStyle("-fx-border-color: red");
                     passwordField.setStyle("-fx-border-color: red");
+                    visiblePasswordField.setStyle("-fx-border-color: red");
                     usernameField.clear();
                     passwordField.clear();
+                    visiblePasswordField.clear();
                     showError("! Invalid credentials");
                 }
             } else {
