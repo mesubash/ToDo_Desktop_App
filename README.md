@@ -6,11 +6,11 @@ Before expecting too much from the project please note that it was developed wit
 operation fulfilling project for the practice of the JavaFX.
 The simple purpose for the development is to get used to with the development of the desktop application and the 
 completion of the Java project.
-I have used fxml for the layout design using the SceneBuilder tools that helped me a lot thoughout the design of 
+I have used fxml for the layout design using the SceneBuilder tools that helped me a lot though-out the design of 
 the UI.
 I have referenced the logic from websites and the AI tools like openai. 
 
-*Design is not responsive and it is currently well working in 14'. So may feel some layout mistaked
+*Design is not responsive and it is currently well working in 14'. So may feel some layout mistakes 
 
 
 Here, in the project I have used just simple logic and some components are still not developed due to lack of time.
@@ -36,3 +36,6 @@ Database: MySQL
 
 
 * make sure you have used the proper external library files like mysql connector etc
+* as register interface is not developed yet so you need to register a new user in database directly and login the 
+ interface
+* 
