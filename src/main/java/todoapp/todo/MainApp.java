@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.print.DocFlavor;
+import javax.swing.*;
 import java.io.IOException;
 
 public class MainApp extends Application {
@@ -32,6 +34,7 @@ public class MainApp extends Application {
             loginController.setMainApp(this);
 
             Scene scene = new Scene(root);
+
             primaryStage.setResizable(false);
 
 
