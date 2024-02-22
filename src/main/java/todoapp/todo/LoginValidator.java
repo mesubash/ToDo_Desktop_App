@@ -4,13 +4,13 @@ import java.sql.*;
 
 public class LoginValidator {
 
-        public static ResultSet validateLogin(String username, String password, String npassword) throws Exception {
-                Connection connection = null;
+        public static ResultSet validateLogin(Connection connection,String username, String password, String npassword) throws Exception {
+
                 PreparedStatement preparedStatement = null;
                 ResultSet resultSet = null;
 
                 try {
-                        connection = DatabaseConnection.getConnection();
+
                         String sql = "SELECT * FROM users WHERE BINARY username=? AND (password = ? OR password = ?)";
                         preparedStatement = connection.prepareStatement(sql);
                         preparedStatement.setString(1, username);

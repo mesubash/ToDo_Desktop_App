@@ -13,7 +13,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static javafx.scene.paint.Color.*;
 
@@ -64,23 +67,30 @@ public class ToDoLoginController {
             String[] validationResults = ClientSideValidator.validate(usernameField, passwordField, visiblePasswordField);
 
             if (validationResults[0] != null && validationResults[0].equalsIgnoreCase("true")) {
-                ResultSet resultSet = LoginValidator.validateLogin(username, password, npassword);
+                // Use try-with-resources to automatically close the connection
+                try (Connection connection = DatabaseConnection.getConnection()) {
+                    if (connection != null) {
+                        ResultSet resultSet = LoginValidator.validateLogin(connection, username, password, npassword);
 
-                if (resultSet.next()) {
-                    User u = new User();
-                    u.setUsername(resultSet.getString("username"));
-                    u.setU_id(resultSet.getInt("u_id"));
-                    mainApp.showMainScene();
-                    showSuccess();
-                } else {
-                    // Clear the password field on unsuccessful login
-                    usernameField.setStyle("-fx-border-color: red");
-                    passwordField.setStyle("-fx-border-color: red");
-                    visiblePasswordField.setStyle("-fx-border-color: red");
-                    usernameField.clear();
-                    passwordField.clear();
-                    visiblePasswordField.clear();
-                    showError("! Invalid credentials");
+                        if (resultSet.next()) {
+                            User u = new User();
+                            u.setUsername(resultSet.getString("username"));
+                            u.setU_id(resultSet.getInt("u_id"));
+                            mainApp.showMainScene();
+                            showSuccess();
+                        } else {
+                            // Clear the password field on unsuccessful login
+                            resetError();
+                            showError("! Invalid credentials",450);
+                        }
+                    } else {
+                        // Database connection error, show error dialog
+                        showError("Validation error! Not connected to database.",260);
+                    }
+
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    // Handle other exceptions if needed
                 }
             } else {
                 // Handle empty fields based on the validation results
@@ -94,12 +104,12 @@ public class ToDoLoginController {
                     passworderr.setVisible(true);
                 }
             }
-
         } catch (Exception e) {
-            // Log the exception or show an error message to the user
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private void handleForgetPassword(){
@@ -124,14 +134,14 @@ public class ToDoLoginController {
     }
 
 
-    private void showError(String message) {
+    private void showError(String message,int x_axis) {
         Stage primaryStage = mainApp.getPrimaryStage();
 
-        showCustomErrorInfoAlert(message,primaryStage);
+        showCustomErrorInfoAlert(message,primaryStage,x_axis);
 
 
     }
-    private void showCustomErrorInfoAlert(String content, Stage primaryStage) {
+    private void showCustomErrorInfoAlert(String content, Stage primaryStage, int x) {
         Stage dialog = new Stage();
         dialog.initOwner(primaryStage);
 
@@ -144,7 +154,7 @@ public class ToDoLoginController {
         contentLabel.setStyle("-fx-background-color: red;-fx-padding: 3px,3px,3px,3px;-fx-text-fill: white;");
         contentLabel.setFont(new Font("times new roman",18));
 
-        dialog.setX(primaryStage.getX()+450);
+        dialog.setX(primaryStage.getX()+x);
         dialog.setY(primaryStage.getY()+36);
 
         dialog.setScene(new Scene(new VBox(contentLabel), TRANSPARENT));
