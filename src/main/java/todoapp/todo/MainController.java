@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -229,6 +231,33 @@ public class MainController {
 
         dialog.showAndWait();
     }
+
+    private boolean shiftPressed;
+
+    @FXML
+    private void textFieldKeyPressedHandle(KeyEvent event) {
+        if (event.getCode() == KeyCode.SHIFT) {
+            shiftPressed = true;
+        }
+    }
+
+    @FXML
+    private void textFieldKeyReleasedHandle(KeyEvent event) throws Exception {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (shiftPressed) {
+                // Shift + Enter pressed, go to the next line
+                taskField.appendText("\n");
+            } else {
+                // Only Enter pressed, handle the event (replace with your logic)
+                addTask();
+            }
+
+            // Reset shiftPressed after handling Enter key
+            shiftPressed = false;
+        }
+    }
+
+
 
 
 }

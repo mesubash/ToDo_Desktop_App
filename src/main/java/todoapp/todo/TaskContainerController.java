@@ -38,6 +38,10 @@ public class TaskContainerController {
     private MainController mainController;
     private Task task;
 
+
+
+
+
     public void setTask(Task task) {
         this.task = task;
         updateLabels();
@@ -58,33 +62,31 @@ public class TaskContainerController {
         if (task.isCompleted()) {
             // Set color to green for completed tasks
             taskContainer.setStyle("-fx-background-color: green;");
-            tasktime.setStyle("-fx-text-fill: white");
-            taskContainer.getChildren().forEach(child -> {
-                if (child instanceof Label) {
-                    ((Label) child).setTextFill(Color.WHITE);
-                }
-            });
+
+            taskLabel.setTextFill(Color.WHITE);
+
+            importantCheckbox.setTextFill(Color.WHITE);
+            completedCheckbox.setTextFill(Color.WHITE);
+            tasktime.setTextFill(Color.WHITE);
+
 
         } else if (task.isImportant()) {
             // Set color to purple for important tasks
-            taskContainer.setStyle("-fx-background-color: #7d2ae8;-fx-text-fill: white;");
-            tasktime.setStyle("-fx-text-fill: white");
+            taskContainer.setStyle("-fx-background-color: #7d2ae8;");
 
-            taskContainer.getChildren().forEach(child -> {
-                if (child instanceof Label) {
-                    ((Label) child).setTextFill(Color.WHITE);
-                }
-            });
+            taskLabel.setTextFill(Color.WHITE);
+            importantCheckbox.setTextFill(Color.WHITE);
+            completedCheckbox.setTextFill(Color.WHITE);
+            tasktime.setTextFill(Color.WHITE);
+
         } else {
             // Reset the background color to the default for other tasks
             taskContainer.setStyle("-fx-background-color:white;");
             tasktime.setStyle("-fx-text-fill: #4A5F96");
 
-            taskContainer.getChildren().forEach(child -> {
-                if (child instanceof Label) {
-                    ((Label) child).setTextFill(Color.BLACK);
-                }
-            });
+            taskLabel.setTextFill(Color.BLACK);
+            importantCheckbox.setTextFill(Color.BLACK);
+            completedCheckbox.setTextFill(Color.BLACK);
         }
 
     }
@@ -191,6 +193,30 @@ public class TaskContainerController {
     private void onHoverExited(){
         deleteButton.setStyle("-fx-background-color: white;");
     }
+
+    @FXML
+    private void onLabelHover(){
+        taskLabel.setStyle("-fx-font-size: 24px;");
+
+    }
+
+    @FXML
+    private void onCompletedHover(){
+        completedCheckbox.setStyle("-fx-scale-x: 1.2; -fx-scale-y: 1.2;");
+
+    }
+    @FXML
+    private void onImportantHover(){
+        importantCheckbox.setStyle("-fx-scale-x: 1.2; -fx-scale-y: 1.2;");
+    }
+    @FXML
+    private void resetHover(){
+        taskLabel.setStyle("");
+        completedCheckbox.setStyle("");
+        importantCheckbox.setStyle("");
+
+    }
+
 
 
 

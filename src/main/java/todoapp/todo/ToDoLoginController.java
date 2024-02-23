@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -56,6 +58,14 @@ public class ToDoLoginController {
         visiblePasswordField.setStyle("-fx-border-color: #7d2ae8");
 
     }
+    private void clearFields(){
+        passwordField.clear();
+        usernameField.clear();
+        visiblePasswordField.clear();
+        passwordField.setStyle("-fx-border-color: red");
+        usernameField.setStyle("-fx-border-color: red");
+        visiblePasswordField.setStyle("-fx-border-color: red");
+    }
 
     @FXML
     private void handleLoginButtonAction() {
@@ -79,8 +89,7 @@ public class ToDoLoginController {
                             mainApp.showMainScene();
                             showSuccess();
                         } else {
-                            // Clear the password field on unsuccessful login
-                            resetError();
+                            clearFields();
                             showError("! Invalid credentials",450);
                         }
                     } else {
@@ -256,7 +265,12 @@ public class ToDoLoginController {
 
 
     }
-
+    @FXML
+    private void loginKeyHandle(KeyEvent event){
+        if(event.getCode()== KeyCode.ENTER){
+            handleLoginButtonAction();
+        }
+    }
 
 }
 

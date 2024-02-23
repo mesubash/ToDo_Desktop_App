@@ -106,7 +106,10 @@
                   </ScrollPane>
                   <AnchorPane accessibleRole="DIALOG" layoutX="175.0" layoutY="594.0" minHeight="0.0" minWidth="0.0" prefHeight="54.0" prefWidth="628.0" style="-fx-background-color: lightgrey;">
                      <children>
-                        <TextArea fx:id="taskField" blendMode="COLOR_BURN" prefHeight="54.0" prefWidth="558.0" promptText="+ Add your task" wrapText="true" />
+                        <TextArea fx:id="taskField" blendMode="COLOR_BURN" onKeyPressed="#textFieldKeyPressedHandle" onKeyReleased="#textFieldKeyReleasedHandle" prefHeight="54.0" prefWidth="558.0" promptText="+ Add your task" wrapText="true">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font></TextArea>
                         <Button layoutX="568.0" layoutY="7.0" mnemonicParsing="false" onAction="#addTask" prefHeight="40.0" prefWidth="52.0" style="-fx-background-color: #7c0b96;" text="Add" textFill="#ededed">
                            <font>
                               <Font name="System Bold" size="15.0" />

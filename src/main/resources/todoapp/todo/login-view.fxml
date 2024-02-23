@@ -28,13 +28,13 @@
                 <Font name="Tw Cen MT" size="30.0" />
             </font>
         </Text>
-        <TextField fx:id="usernameField" layoutX="190.0" layoutY="123.0" onKeyTyped="#resetError" prefHeight="33.0" prefWidth="222.0" promptText="username" style="-fx-border-color: #7d2ae8;">
+        <TextField fx:id="usernameField" layoutX="190.0" layoutY="123.0" onKeyPressed="#loginKeyHandle" onKeyTyped="#resetError" prefHeight="33.0" prefWidth="222.0" promptText="username" style="-fx-border-color: #7d2ae8;">
             <cursor>
                 <Cursor fx:constant="TEXT" />
             </cursor>
         </TextField>
-        <PasswordField fx:id="passwordField" layoutX="191.0" layoutY="187.0" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" />
-        <TextField fx:id="visiblePasswordField" layoutX="191.0" layoutY="186.0" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" visible="false">
+        <PasswordField fx:id="passwordField" layoutX="191.0" layoutY="187.0" onKeyPressed="#loginKeyHandle" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" />
+        <TextField fx:id="visiblePasswordField" layoutX="191.0" layoutY="186.0" onKeyPressed="#loginKeyHandle" onKeyTyped="#resetError" prefHeight="31.0" prefWidth="222.0" promptText="password" style="-fx-border-color: #7d2ae8;" visible="false">
 
         <opaqueInsets>
             <Insets />
