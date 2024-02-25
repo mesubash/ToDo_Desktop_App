@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +43,7 @@ public class ToDoLoginController {
     @FXML
     private PasswordField passwordField;
 
-    private MainApp mainApp;
+    public MainApp mainApp;
     @FXML
     private Label usererr;
     @FXML
@@ -48,6 +51,8 @@ public class ToDoLoginController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        RegisterController.setMainApp(this.mainApp);
+        ForgetPasswordController.setMainApp(this.mainApp);
     }
     @FXML
     private void resetError(){
@@ -73,6 +78,7 @@ public class ToDoLoginController {
         String password = passwordField.getText();
         String npassword = visiblePasswordField.getText();
 
+
         try {
             String[] validationResults = ClientSideValidator.validate(usernameField, passwordField, visiblePasswordField);
 
@@ -80,12 +86,10 @@ public class ToDoLoginController {
                 // Use try-with-resources to automatically close the connection
                 try (Connection connection = DatabaseConnection.getConnection()) {
                     if (connection != null) {
-                        ResultSet resultSet = LoginValidator.validateLogin(connection, username, password, npassword);
+                        boolean valid = LoginValidator.validateLogin(connection, username, password,npassword);
 
-                        if (resultSet.next()) {
-                            User u = new User();
-                            u.setUsername(resultSet.getString("username"));
-                            u.setU_id(resultSet.getInt("u_id"));
+                        if (valid) {
+
                             mainApp.showMainScene();
                             showSuccess();
                         } else {
@@ -96,6 +100,7 @@ public class ToDoLoginController {
                         // Database connection error, show error dialog
                         showError("Validation error! Not connected to database.",260);
                     }
+
 
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -116,7 +121,10 @@ public class ToDoLoginController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
+
 
 
 
@@ -125,10 +133,7 @@ public class ToDoLoginController {
         mainApp.showForgetPasswordScene();
 
     }
-    @FXML
-    private void gobackHandle(){
-        mainApp.showLoginScene();
-    }
+
     @FXML
     private void handleRegister(){
         mainApp.showRegisterScene();
@@ -139,7 +144,7 @@ public class ToDoLoginController {
     private void showSuccess(){
         Stage primaryStage = mainApp.getPrimaryStage();
 
-        showCustomSuccessInfoAlert("Login success",primaryStage);
+        showCustomSuccessInfoAlert("Login successful",primaryStage);
     }
 
 
@@ -195,8 +200,8 @@ public class ToDoLoginController {
         contentLabel.setStyle("-fx-background-color: green;-fx-padding: 3px,3px,3px,3px;-fx-text-fill: white;");
         contentLabel.setFont(new Font("times new roman",18));
 
-        dialog.setX(primaryStage.getX()+1020);
-        dialog.setY(primaryStage.getY()+43);
+        dialog.setX(primaryStage.getX()+1100);
+        dialog.setY(primaryStage.getY()+95);
 
         dialog.setScene(new Scene(new VBox(contentLabel), TRANSPARENT));
 

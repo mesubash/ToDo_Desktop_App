@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -92,10 +93,10 @@ public class MainController {
             if (inserted > 0) {
                 loadTasks();
 
-                showCustomInfoAlert("New task added!",mainApp.getPrimaryStage(),1000,43,2);
+                showCustomInfoAlert("New task added!",mainApp.getPrimaryStage(),1100,95,2.9,Color.GREEN);
 
             } else
-                System.out.println("Error insertion");
+                showCustomInfoAlert("Error Insertion",mainApp.getPrimaryStage(),1100,95,2.9,Color.RED);
         }
     }
 
@@ -109,12 +110,6 @@ public class MainController {
             addTaskContainer(task.getDescription(), task);  // Pass the Task to addTaskContainer
         }
     }
-
-
-
-
-
-
 
     private void addTaskContainer(String taskText, Task task) {
         try {
@@ -184,7 +179,7 @@ public class MainController {
                         primaryStage.show();
 
                         Platform.runLater(() -> {
-                            showCustomInfoAlert("Logged out successfully!",primaryStage,420,36,3.5);
+                            showCustomInfoAlert("Logged out successfully!",primaryStage,420,36,3.5,Color.RED);
                         });
 
 
@@ -199,7 +194,7 @@ public class MainController {
 
 
 
-    private void showCustomInfoAlert(String content, Stage primaryStage,double x,double y,double duration) {
+    private void showCustomInfoAlert(String content, Stage primaryStage,double x,double y,double duration,Color customColor) {
         Stage dialog = new Stage();
 
         dialog.initOwner(primaryStage);
@@ -209,7 +204,8 @@ public class MainController {
         dialog.setResizable(false);
 
         Label contentLabel = new Label(content);
-        contentLabel.setStyle("-fx-text-fill: white; -fx-background-color: green;-fx-padding: 3px,3px,3px,3px;");
+        contentLabel.setBackground(Background.fill(customColor));
+        contentLabel.setStyle("-fx-text-fill: white;-fx-padding: 3px,3px,3px,3px;");
         contentLabel.setFont(new Font("Times new roman",16));
         dialog.setX(primaryStage.getX()+x);
         dialog.setY(primaryStage.getY()+y);

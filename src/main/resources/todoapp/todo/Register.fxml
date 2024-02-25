@@ -1,22 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.ToDoLoginController">
+<AnchorPane prefHeight="442.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.RegisterController">
     <children>
-        <TextArea layoutX="35.0" layoutY="27.0" prefHeight="313.0" prefWidth="511.0" text="Opps!&#10;&#10;This service is not developed yet.&#10;&#10;Come back soon!">
-            <font>
-                <Font size="30.0" />
-            </font>
-        </TextArea>
-        <Button layoutX="509.0" layoutY="351.0" mnemonicParsing="false" onAction="#gobackHandle" prefHeight="36.0" prefWidth="73.0" style="-fx-background-color: #7D2AE8;" text="Go Back" textFill="WHITE">
-            <font>
-                <Font name="System Bold" size="12.0" />
-            </font>
-        </Button>
+      <AnchorPane prefHeight="46.0" prefWidth="604.0" style="-fx-background-color: #7d6ae5;">
+         <children>
+            <Label layoutX="14.0" layoutY="4.0" prefHeight="40.0" prefWidth="108.0" text="Register" textFill="#f8f5f5">
+               <font>
+                  <Font name="Segoe Script" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-5.0" layoutY="46.0" prefHeight="372.0" prefWidth="609.0" style="-fx-background-color: lightgrey;">
+         <children>
+            <VBox layoutX="7.0" layoutY="22.0" prefHeight="372.0" prefWidth="595.0" spacing="25.0">
+               <children>
+                  <AnchorPane prefHeight="52.0" prefWidth="599.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aaaaaa" height="72.0" stroke="#656161" strokeType="INSIDE" width="595.0" />
+                        <Label layoutX="6.0" prefHeight="20.0" prefWidth="43.0" text="Name" textFill="#160404">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutX="21.0" layoutY="20.0" prefHeight="46.0" prefWidth="537.0" spacing="60.0">
+                           <children>
+                              <VBox prefHeight="46.0" prefWidth="212.0">
+                                 <children>
+                                    <TextField fx:id="firstname" prefHeight="25.0" prefWidth="234.0" promptText="First Name" onKeyTyped="#resetFName" />
+                                    <Label fx:id="firstnameerr" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="192.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="46.0" prefWidth="249.0">
+                                 <children>
+                                    <TextField fx:id="lastname" prefHeight="25.0" prefWidth="235.0" promptText="Last Name" onKeyTyped="#resetLName" />
+                                    <Label fx:id="lastnameerr" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="191.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="599.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aaaaaa" height="99.0" layoutY="-7.0" stroke="#656161" strokeType="INSIDE" width="595.0" />
+                        <Label layoutX="6.0" layoutY="-10.0" prefHeight="20.0" prefWidth="80.0" text="Contact Info" textFill="#160404">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutX="21.0" layoutY="20.0" prefHeight="46.0" prefWidth="553.0" spacing="60.0">
+                           <children>
+                              <VBox prefHeight="46.0" prefWidth="243.0">
+                                 <children>
+                                    <Label text="Email Address" />
+                                    <TextField fx:id="email" prefHeight="25.0" prefWidth="241.0" promptText="Email" onKeyTyped="#resetEmail" />
+                                    <Label fx:id="emailerr" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="229.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="46.0" prefWidth="242.0">
+                                 <children>
+                                    <Label text="Phone Number" />
+                                    <TextField fx:id="phone" prefHeight="25.0" prefWidth="179.0" promptText="Phone" onKeyTyped="#resetPhone" />
+                                    <Label fx:id="phoneerr" alignment="TOP_LEFT" prefHeight="11.0" prefWidth="143.0" text="(optional)">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="599.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aaaaaa" height="99.0" layoutY="-7.0" stroke="#656161" strokeType="INSIDE" width="595.0" />
+                        <HBox layoutX="21.0" layoutY="17.0" prefHeight="46.0" prefWidth="553.0" spacing="60.0">
+                           <children>
+                              <VBox prefHeight="46.0" prefWidth="162.0">
+                                 <children>
+                                    <Label text="Username" />
+                                    <TextField fx:id="username" onKeyPressed="#resetUsernameField" onKeyTyped="#usernameVerify" prefHeight="25.0" prefWidth="161.0" promptText="username" />
+                                    <Label fx:id="usernameerr" alignment="TOP_LEFT" prefHeight="13.0" prefWidth="169.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="61.0" prefWidth="178.0">
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="63.0" text="Password" />
+                                    <TextField fx:id="password" onKeyTyped="#resetPassword" prefHeight="25.0" prefWidth="157.0" promptText="Password" />
+                                    <Label fx:id="passworderr" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="149.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="61.0" prefWidth="160.0">
+                                 <children>
+                                    <Label text="Confirm Password" />
+                                    <TextField fx:id="cpassword" onKeyPressed="#resetCPassword" onKeyTyped="#passwordVerify" promptText="Confirm Password" />
+                                    <Label fx:id="cpassworderr" alignment="TOP_LEFT" prefHeight="13.0" prefWidth="169.0" text="*" textFill="#e90000">
+                                       <font>
+                                          <Font name="Segoe Script Bold" size="9.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <ButtonBar depthTest="DISABLE" nodeOrientation="LEFT_TO_RIGHT" prefHeight="44.0" prefWidth="595.0">
+                    <buttons>
+                          <Button minWidth="24.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#gobackHandle" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #7D2AE8;" text="&lt; Go Back" textFill="WHITE">
+                              <font>
+                                  <Font name="System Bold" size="12.0" />
+                              </font>
+                          </Button>
+                      <Button mnemonicParsing="false" onAction="#onRegisterClicked" prefHeight="39.0" prefWidth="531.0" style="-fx-background-color: green;" text="Register &gt;" textFill="#f6f6f6" />
+                    </buttons>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ButtonBar>
+               </children>
+            </VBox>
+            <Label fx:id="suggestionTop" alignment="CENTER" disable="true" layoutX="36.0" layoutY="5.0" prefHeight="17.0" prefWidth="537.0" text="Hover over the fields to see the pattern" textFill="#5408f6">
+               <font>
+                  <Font name="Tw Cen MT Bold Italic" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

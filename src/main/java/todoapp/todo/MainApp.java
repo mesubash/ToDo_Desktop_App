@@ -74,8 +74,8 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPassword.fxml"));
             Parent root = loader.load();
 
-            ToDoLoginController loginController = loader.getController();
-            loginController.setMainApp(this);
+            ForgetPasswordController forgetPasswordController = loader.getController();
+            forgetPasswordController.setMainApp(this);
 
             Scene scene = new Scene(root);
             primaryStage.setResizable(false);
@@ -93,8 +93,9 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
             Parent root = loader.load();
 
-            ToDoLoginController loginController = loader.getController();
-            loginController.setMainApp(this);
+            RegisterController registerController = loader.getController();
+            registerController.setMainApp(this);
+            registerController.initialize();
 
             Scene scene = new Scene(root);
             primaryStage.setResizable(false);

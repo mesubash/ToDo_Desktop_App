@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -138,22 +139,14 @@ public class TaskContainerController {
 
                 if (rowsAffected > 0) {
                     mainController.loadTasks();
-                    showSuccessDelete();
+                    showCustomDialogue("Successfully Deleted",Color.GREEN);
                 } else {
-                    showError("Failed to delete task: " + task.getDescription());
+                    showCustomDialogue("Failed to delete task: ",Color.RED);
                 }
             }
         });
     }
-    private void showError(String message) {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle("Error");
-        errorAlert.setHeaderText(null);
-        errorAlert.setContentText(message);
-        errorAlert.show();
-    }
-
-    private void showSuccessDelete(){
+    private void showCustomDialogue(String content,Color customColor){
         Stage primaryStage=mainController.getStage();
 
         Stage dialog = new Stage();
@@ -163,11 +156,12 @@ public class TaskContainerController {
         dialog.initStyle(StageStyle.UNDECORATED);
         dialog.setResizable(false);
 
-        Label contentLabel = new Label("Successfully Deleted");
-        contentLabel.setStyle("-fx-text-fill: white; -fx-background-color: green;-fx-padding: 3px,3px,3px,3px;");
+        Label contentLabel = new Label(content);
+        contentLabel.setBackground(Background.fill(customColor));
+        contentLabel.setStyle("-fx-text-fill: white;-fx-padding: 3px,3px,3px,3px;");
         contentLabel.setFont(new Font("Times new roman",16));
-        dialog.setX(primaryStage.getX()+1000);
-        dialog.setY(primaryStage.getY()+43);
+        dialog.setX(primaryStage.getX()+1100);
+        dialog.setY(primaryStage.getY()+95);
 
 
         dialog.setScene(new Scene(new Group(new VBox(contentLabel)), Color.TRANSPARENT));
@@ -175,7 +169,7 @@ public class TaskContainerController {
 
         // Use Timeline for a delayed closing effect
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(1.5), event -> {
+                new KeyFrame(Duration.seconds(2), event -> {
 //                    System.out.println("Timeline finished, closing dialog.");
                     dialog.close();
                 })
@@ -216,10 +210,5 @@ public class TaskContainerController {
         importantCheckbox.setStyle("");
 
     }
-
-
-
-
-
 }
 

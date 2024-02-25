@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <HBox fx:id="rootHBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1282.0" styleClass="todo-login" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoapp.todo.MainController">
 
@@ -53,16 +52,25 @@
                         </Label>
                     </buttons>
                 </ButtonBar>
-                <Text layoutX="28.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TO-DO">
-                    <font>
-                        <Font size="22.0" />
-                    </font>
-                </Text>
             <Button fx:id="logoutButton" layoutX="36.0" layoutY="648.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="31.0" prefWidth="98.0" style="-fx-background-color: #7d6ae5;" text="Log Out" textFill="#f2f2f2">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
+            <HBox prefHeight="72.0" prefWidth="185.0" style="-fx-background-color: grey;">
+               <children>
+                  <ImageView fitHeight="59.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pngicon.png" />
+                     </image></ImageView>
+
+                  <Label alignment="CENTER" prefHeight="56.0" prefWidth="122.0" text="ToDo">
+                     <font>
+                        <Font name="Segoe Script" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             </children>
          <opaqueInsets>
             <Insets />

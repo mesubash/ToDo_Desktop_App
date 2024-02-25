@@ -1,8 +1,11 @@
 CREATE TABLE users (
     u_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL
-
+    name varchar(100) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(388) NOT NULL,
+    email varchar(100) NOT NULL,
+    phone varchar(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 //for the todo_tasks table
