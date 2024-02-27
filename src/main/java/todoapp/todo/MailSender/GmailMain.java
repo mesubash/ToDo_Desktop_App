@@ -1,16 +1,23 @@
 package todoapp.todo.MailSender;
 
+import todoapp.todo.DatabaseConnection;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class GmailMain {
     private static String to;
+    private static String name;
     private static String generatedCode;
     private static long codeTimestamp;
 
@@ -30,6 +37,8 @@ public class GmailMain {
     public static void setEmail(String extractedEmail) {
         to = extractedEmail;
     }
+
+
 
     public static void setValidationPeriod(long period) {
         validationPeriod = period;
@@ -60,7 +69,19 @@ public class GmailMain {
         generateCode();
         String from = "tododesktopapp@gmail.com";
         String subject = "Forget Password Request";
-        String text = "Your verification code: " + generatedCode;
+        String htmlContent = "<html><head>\n" +
+                                "    <title>Password Reset Verification</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<body>\n" +
+                "    <h2>Password Reset Verification</h2>\n" +
+                "    <p>Dear "+getName()+",</p>\n" +
+                "    <p>We have received a request to reset the password associated with your account. To proceed with the password reset, please use the following verification code:</p>\n" +
+                "    <p><strong>Verification Code:</strong>"+generatedCode+"</p>\n" +
+                "    <p>Please enter this code on the password reset page to verify your identity and complete the password reset process. Note that this code is valid for 5 minutes for security reasons. If the code expires, you can request a new one on the password reset page.</p>\n" +
+                "    <p>If you did not initiate this password reset request, please disregard this email. Your account security is important to us.</p>\n" +
+                "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
+                "</body></html>";
 
         try {
             // Check for network connectivity
@@ -71,7 +92,7 @@ public class GmailMain {
 
             // Attempt to send the email
             if (to != null && isValidEmail(to) && isNetworkAvailable()) {
-                gmailSender.sendMail(from, to, subject, text);
+                gmailSender.sendMail(from, to, subject, htmlContent);
                 return true; // Email sent successfully
             } else {
                 System.out.println("Invalid email address: " + to);
@@ -119,4 +140,23 @@ public class GmailMain {
     public static String getTo() {
         return to;
     }
+    private static String getName() {
+        try {
+            Connection cn=DatabaseConnection.getConnection();
+            if(cn!=null){
+                PreparedStatement ps=cn.prepareStatement("SELECT name FROM users WHERE email = ?");
+                ps.setString(1,to);
+                ResultSet i=ps.executeQuery();
+                if(i.next()){
+                    String name=i.getString("name");
+                    return name;
+                }
+
+            }
+        }catch (Exception e){
+
+        }
+        return "null ";
+    }
+
 }

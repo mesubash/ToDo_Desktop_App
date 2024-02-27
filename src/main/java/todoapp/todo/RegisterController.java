@@ -1,31 +1,23 @@
 package todoapp.todo;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
+
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import todoapp.todo.DatabaseConnection;
+import todoapp.todo.DialogueController;
+import todoapp.todo.MainApp;
+
+import java.io.IOException;
+import java.sql.*;
 import java.util.regex.Pattern;
 
-import static javafx.scene.paint.Color.TRANSPARENT;
 
 
 public class RegisterController {
-
-
     static MainApp mapp;
     @FXML
     private TextField firstname;
@@ -333,7 +325,7 @@ public class RegisterController {
 
 
 
-    private void register(String name, String emailAddress, long phoneNumber, String usernameText, String passwordText) {
+    private void register(String name, String emailAddress, long phoneNumber, String usernameText, String passwordText) throws IOException {
         try (Connection cnx = DatabaseConnection.getConnection()) {
             if (cnx != null) {
                 String statement;
@@ -366,8 +358,9 @@ public class RegisterController {
                 }
             }
         } catch (Exception e) {
-            // Handle the exception appropriately, log it, and consider not printing to console in production
-            e.printStackTrace();
+            DialogueController controller = new DialogueController();
+
+            controller.showErrorDialogue(mapp.getPrimaryStage(),"User with this email already exists",410,31,1.7);
         }
     }
 

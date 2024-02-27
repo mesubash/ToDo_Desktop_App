@@ -1,28 +1,18 @@
 package todoapp.todo;
 
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
+import todoapp.todo.*;
 
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import static javafx.scene.paint.Color.*;
-
 
 
 public class ToDoLoginController {

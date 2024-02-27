@@ -1,19 +1,14 @@
 package todoapp.todo;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
+import todoapp.todo.DialogueController;
+import todoapp.todo.MainController;
+import todoapp.todo.Task;
+import todoapp.todo.TaskHandler;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

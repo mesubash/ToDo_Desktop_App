@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import todoapp.todo.DatabaseConnection;
+import todoapp.todo.DialogueController;
 import todoapp.todo.MailSender.CodeStore;
 import todoapp.todo.MailSender.GmailMain;
 
@@ -21,6 +23,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import javafx.concurrent.Task;
+import todoapp.todo.MainApp;
+import todoapp.todo.UpdatePassword;
 
 import static todoapp.todo.MailSender.CodeStore.getUserIdByEmail;
 
@@ -139,6 +143,7 @@ public class ForgetPasswordController {
                         @Override
                         protected Boolean call() throws Exception {
                             setEmail(emailField.getText());
+
                             return sendMail();
                         }
                     };
@@ -280,7 +285,7 @@ public class ForgetPasswordController {
 
               return;
           }
-          boolean updated=UpdatePassword.updatePassword(password,email);
+          boolean updated= UpdatePassword.updatePassword(password,email);
           if(updated){
 
               DialogueController controller=new DialogueController();
@@ -423,6 +428,7 @@ public class ForgetPasswordController {
     private boolean sendMail() throws MessagingException {
         try {
             GmailMain.setEmail(email);
+//            GmailMain.setUser();
             return GmailMain.initialize();
         } catch (MessagingException e) {
             e.printStackTrace();
@@ -447,6 +453,7 @@ public class ForgetPasswordController {
 
                     // Fetch the existing email and user ID associated with the email
                     String userEmail = GmailMain.getTo();
+
                     int userId = getUserIdByEmail(userEmail);
 
                     // Generate a new code using GmailMain logic

@@ -2,10 +2,12 @@ package todoapp.todo.MailSender;
 
 import todoapp.todo.DatabaseConnection;
 import todoapp.todo.ForgetPasswordController;
+import todoapp.todo.UpdatePassword;
 
 import java.sql.*;
 
 public class CodeStore {
+    static String name;
 
     public static void storeCodeInDatabase(String userEmail, String code) {
         Connection connection = null;
@@ -27,7 +29,6 @@ public class CodeStore {
                 preparedStatement.setString(4, code);
 
                 if (preparedStatement.executeUpdate() > 0) {
-                    System.out.println("Code updated or inserted in database successfully");
                     ForgetPasswordController.setStoredCode(code);
                 }
             }
@@ -58,7 +59,7 @@ public class CodeStore {
             // Your database connection logic (replace with your own database details)
             connection = DatabaseConnection.getConnection();
 
-            String sql = "SELECT u_id FROM users WHERE email = ?";
+            String sql = "SELECT u_id,name FROM users WHERE email = ?";
             if (connection != null) {
                 preparedStatement = connection.prepareStatement(sql);
                 preparedStatement.setString(1, userEmail);
@@ -66,6 +67,8 @@ public class CodeStore {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     userId = resultSet.getInt("u_id");
+                    name = resultSet.getString("name");
+
                 }
             }
         } finally {
@@ -84,5 +87,6 @@ public class CodeStore {
 
         return userId;
     }
+
 
 }

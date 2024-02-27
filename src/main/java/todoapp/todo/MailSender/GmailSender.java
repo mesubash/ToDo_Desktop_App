@@ -4,9 +4,14 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
+import java.util.List;
 
 public class GmailSender {
-    public boolean sendMail(String from, String to, String subject, String text)throws MessagingException {
+    public boolean sendMail(String from, String to, String subject, String htmlContent) throws MessagingException {
         boolean success = false;
 
         // logic
@@ -20,7 +25,7 @@ public class GmailSender {
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         String user = "tododesktopapp";
-        String password = System.getenv("TODO_GMAIL_PASSWORD"); // Replace with the actual password
+        String password = System.getenv("TODO_GMAIL_PASSWORD"); //environment variable used
         System.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
         System.setProperty("mail.smtp.ssl.ciphersuites", "TLS_AES_128_GCM_SHA256");
 
@@ -38,14 +43,16 @@ public class GmailSender {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setFrom(new InternetAddress(from));
             message.setSubject(subject);
-            message.setText(text);
+            message.setContent(htmlContent, "text/html");
             Transport.send(message);
             success = true;
 
         } catch (Exception e) {
+
             e.printStackTrace();
         }
 
         return success;
     }
+
 }
