@@ -64,12 +64,11 @@ public class ToDoLoginController {
 
     }
     private void clearFields(){
+
         passwordField.clear();
         usernameField.clear();
         visiblePasswordField.clear();
-        passwordField.setStyle("-fx-border-color: red");
-        usernameField.setStyle("-fx-border-color: red");
-        visiblePasswordField.setStyle("-fx-border-color: red");
+
     }
 
     @FXML
@@ -109,7 +108,7 @@ public class ToDoLoginController {
             } else {
                 // Handle empty fields based on the validation results
                 if ("unameEmpty".equalsIgnoreCase(validationResults[0])) {
-                    usererr.setText("* username cannot be empty");
+                    usererr.setText("* field cannot be empty");
                     usererr.setVisible(true);
                 }
 
@@ -136,7 +135,9 @@ public class ToDoLoginController {
 
     @FXML
     private void handleRegister(){
+
         mainApp.showRegisterScene();
+
     }
 
 
@@ -258,7 +259,6 @@ public class ToDoLoginController {
                 passwordField.setVisible(true);
                 passwordField.setText(visiblePasswordField.getText());
                 visiblePasswordField.setVisible(false);
-
                 iconField.setImage(icon);
 
             } else {

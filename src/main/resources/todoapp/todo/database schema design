@@ -18,5 +18,18 @@ CREATE TABLE tasks (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user_id FOREIGN KEY (u_id) REFERENCES users(u_id)
 );
+//validation  keys
+CREATE TABLE validation_keys (
+    user_id INT,
+    email VARCHAR(255) NOT NULL,
+    validation_code VARCHAR(4) NOT NULL,
+    timestamp_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(u_id),
+    UNIQUE KEY unique_user_email (user_id, email)
+);
 
+//update query for the single code for single user and email
+INSERT INTO validation_keys (user_id, email, validation_code)
+VALUES (1, 'user@example.com', '1234')
+ON DUPLICATE KEY UPDATE validation_code = '5678';
 

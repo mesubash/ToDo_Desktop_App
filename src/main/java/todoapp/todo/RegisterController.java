@@ -355,11 +355,13 @@ public class RegisterController {
                     int i = ps.executeUpdate();
                     if (i > 0) {
                         mapp.showLoginScene();
-                        showSuccess();
+                        DialogueController controller = new DialogueController();
+                        controller.showSuccessDialogue(mapp.getPrimaryStage(),"User Registered!",230,31,2.1);
 
                     } else {
                         mapp.showLoginScene();
-                        showError();
+                        DialogueController controller = new DialogueController();
+                        controller.showErrorDialogue(mapp.getPrimaryStage(),"Register Failed! Try Again",230,31,2.1);
                     }
                 }
             }
@@ -368,55 +370,6 @@ public class RegisterController {
             e.printStackTrace();
         }
     }
-
-
-
-    private void showSuccess() {
-        Stage primaryStage = mapp.getPrimaryStage();
-
-        // Assuming you are transitioning to the login scene
-        mapp.showLoginScene();
-
-        // Show success dialog after the scene transition
-        showCustomInfoAlert("User Registered Successfully", primaryStage,Color.GREEN);
-    }
-    private void showError() {
-        Stage primaryStage = mapp.getPrimaryStage();
-        String message="Cannot register the user!";
-        showCustomInfoAlert(message,primaryStage,Color.RED);
-
-
-    }
-
-    private void showCustomInfoAlert(String content, Stage primaryStage,Color bkcolor) {
-        Stage dialog = new Stage();
-        dialog.initOwner(primaryStage);
-
-        // Customize the appearance
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setResizable(false);
-
-        Label contentLabel = new Label(content);
-        contentLabel.setBackground(Background.fill(bkcolor));
-        contentLabel.setStyle("-fx-padding: 3px,3px,3px,3px;-fx-text-fill: white;");
-        contentLabel.setFont(new Font("times new roman", 18));
-
-        dialog.setX(primaryStage.getX() + 230);
-        dialog.setY(primaryStage.getY() + 31);
-
-        dialog.setScene(new Scene(new VBox(contentLabel), TRANSPARENT));
-
-        // Use Timeline for a delayed closing effect
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(5), event -> dialog.close())
-        );
-        timeline.play();
-
-        dialog.showAndWait();
-    }
-
-
-
 
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt(4));

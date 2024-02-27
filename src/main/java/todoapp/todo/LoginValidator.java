@@ -11,25 +11,27 @@ public class LoginValidator {
                 ResultSet resultSet = null;
 
                 try {
-                        String sql = "SELECT * FROM users WHERE BINARY username=?";
+                        String sql = "SELECT * FROM users WHERE BINARY username=? OR email=?";
                         preparedStatement = connection.prepareStatement(sql);
                         preparedStatement.setString(1, username);
+                        preparedStatement.setString(2,username);
 
                         resultSet = preparedStatement.executeQuery();
 
                         if (resultSet.next()) {
                                 String hashedPasswordFromDatabase = resultSet.getString("password");
                                 // Use BCrypt.checkpw to compare the entered password with the hashed password
-                                boolean result=BCrypt.checkpw(enteredPassword, hashedPasswordFromDatabase);
-                                if(result){
+                                boolean result=false;
+                                boolean result1=BCrypt.checkpw(enteredPassword, hashedPasswordFromDatabase);
+                                boolean result2=BCrypt.checkpw(npassword,hashedPasswordFromDatabase);
+                                if(result1 || result2){
+                                        result=true;
                                         User u = new User();
                                         u.setUsername(resultSet.getString("username"));
                                         u.setU_id(resultSet.getInt("u_id"));
                                         u.setName(resultSet.getString("name"));
 
                                 }
-
-
 
                                 return result;
 

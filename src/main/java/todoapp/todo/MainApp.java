@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -77,6 +78,7 @@ public class MainApp extends Application {
             ForgetPasswordController forgetPasswordController = loader.getController();
             forgetPasswordController.setMainApp(this);
 
+
             Scene scene = new Scene(root);
             primaryStage.setResizable(false);
 
@@ -109,6 +111,27 @@ public class MainApp extends Application {
         }
 
     }
+    public void showNextScene(String email) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("nextForgetView.fxml"));
+            Parent root = loader.load();
+
+            ForgetPasswordController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setEmail(email);
+            controller.initializeNext();
+
+            Scene scene = new Scene(root);
+
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Forget Password");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }

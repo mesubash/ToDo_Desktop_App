@@ -1,0 +1,122 @@
+package todoapp.todo;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import javafx.scene.input.Clipboard.*;
+
+import java.io.IOException;
+
+public class DialogueController {
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private Label successLabel;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private Button copyButton;
+    @FXML
+    public Button closeButton;
+
+    private Stage dialogStage;
+    private String password;
+    public void setPassword(String password){
+        this.password=password;
+    }
+
+    public void showSuccessDialogue(Stage primaryStage, String message, int x, int y,double duratiom) throws IOException {
+        showDialogue(primaryStage, "Success.fxml", message, x, y,duratiom);
+    }
+
+    public void showErrorDialogue(Stage primaryStage, String message, int x, int y,double duration) throws IOException {
+        showDialogue(primaryStage, "Error.fxml", message, x, y,duration);
+    }
+
+    public void showCopyDialogue(Stage primaryStage,int x, int y,double duration) throws IOException{
+        showDialogue(primaryStage,"dialogueWithCopyOption.fxml","",x,y,duration);
+    }
+
+    private void showDialogue(Stage primaryStage, String fxmlPath, String message, int x, int y, double duration) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+        Parent root = loader.load();
+
+        DialogueController controller = loader.getController();
+        if (fxmlPath.equals("Error.fxml")) {
+            controller.setErrorLabel(message);
+        } else if (fxmlPath.equals("Success.fxml")) {
+            controller.setSuccessLabel(message);
+        } else {
+            controller.setPasswordField(password);
+        }
+
+        // Use the dialogStage from the controller
+        controller.dialogStage = new Stage();
+        controller.dialogStage.initStyle(StageStyle.UNDECORATED);
+        controller.dialogStage.initModality(Modality.APPLICATION_MODAL);
+        controller.dialogStage.initOwner(primaryStage);
+
+        // Set the loaded FXML as the scene
+        Scene scene = new Scene(root);
+        controller.dialogStage.setScene(scene);
+
+        // Set the position
+        controller.dialogStage.setX(primaryStage.getX() + x);
+        controller.dialogStage.setY(primaryStage.getY() + y);
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(duration), event -> controller.dialogStage.close())
+        );
+        timeline.play();
+
+        // Show the dialog
+        controller.dialogStage.showAndWait();
+    }
+    public void setErrorLabel(String message) {
+        errorLabel.setText(message);
+    }
+    public void setSuccessLabel(String message){
+        successLabel.setText(message);
+    }
+    private void setPasswordField(String password){
+        passwordLabel.setText(password);
+
+    }
+
+    @FXML
+    private void onCloseButtonCliceked(){
+        dialogStage.close();
+    }
+    @FXML
+
+    private void onCopyClicked() throws IOException {
+
+            // Copy the text to the system clipboard
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(passwordLabel.getText());
+            clipboard.setContent(content);
+            copyButton.setStyle("-fx-background-color: green;-fx-text-fill: white");
+            copyButton.setText("copied");
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(1.3), event -> dialogStage.close())
+            );
+            timeline.play();
+
+
+
+    }
+
+}
