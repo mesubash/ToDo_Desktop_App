@@ -68,7 +68,7 @@
          <graphic>
             <ImageView fx:id="iconField" fitHeight="21.0" fitWidth="16.0" onMouseClicked="#setPasswordShow" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@eye.png" />
+                  <Image url="@icons/eye.png" />
                </image>
             </ImageView>
          </graphic></ToggleButton>

@@ -17,10 +17,8 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
-import org.mindrot.jbcrypt.BCrypt;
-
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static javafx.scene.paint.Color.*;
@@ -72,7 +70,7 @@ public class ToDoLoginController {
     }
 
     @FXML
-    private void handleLoginButtonAction() {
+    private void handleLoginButtonAction() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String npassword = visiblePasswordField.getText();
@@ -93,17 +91,23 @@ public class ToDoLoginController {
                             showSuccess();
                         } else {
                             clearFields();
-                            showError("! Invalid credentials",450);
+                            DialogueController controller=new DialogueController();
+                            controller.showErrorDialogue(mainApp.getPrimaryStage(),"Invalid credential",410,33,2);
                         }
                     } else {
                         // Database connection error, show error dialog
-                        showError("Validation error! Not connected to database.",260);
+                        DialogueController controller=new DialogueController();
+                        controller.showErrorDialogue(mainApp.getPrimaryStage(),"Database Connection error",410,33,2);
+
                     }
 
 
                 } catch (SQLException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                    // Handle other exceptions if needed
+                    // Database connection error, show error dialog
+                    DialogueController controller=new DialogueController();
+
+                    controller.showErrorDialogue(mainApp.getPrimaryStage(),"Database connection Error",410,33,2);
+//                    e.printStackTrace();
                 }
             } else {
                 // Handle empty fields based on the validation results
@@ -118,14 +122,12 @@ public class ToDoLoginController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogueController controller=new DialogueController();
+
+            controller.showErrorDialogue(mainApp.getPrimaryStage(),"Validation Error",410,33,2);
         }
 
     }
-
-
-
-
 
     @FXML
     private void handleForgetPassword(){
@@ -142,101 +144,26 @@ public class ToDoLoginController {
 
 
 
-    private void showSuccess(){
-        Stage primaryStage = mainApp.getPrimaryStage();
-
-        showCustomSuccessInfoAlert("Login successful",primaryStage);
-    }
-
-
-    private void showError(String message,int x_axis) {
-        Stage primaryStage = mainApp.getPrimaryStage();
-
-        showCustomErrorInfoAlert(message,primaryStage,x_axis);
-
+    private void showSuccess() throws IOException {
+        DialogueController controller = new DialogueController();
+        controller.showSuccessDialogue(mainApp.getPrimaryStage(),"Login Successful",1100,93,1.3);
 
     }
-    private void showCustomErrorInfoAlert(String content, Stage primaryStage, int x) {
-        Stage dialog = new Stage();
-        dialog.initOwner(primaryStage);
-
-        // Customize the appearance
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setResizable(false);
-
-        Label contentLabel = new Label(content);
-//        contentLabel.setStyle("-fx-font-size: 14px;");
-        contentLabel.setStyle("-fx-background-color: red;-fx-padding: 3px,3px,3px,3px;-fx-text-fill: white;");
-        contentLabel.setFont(new Font("times new roman",18));
-
-        dialog.setX(primaryStage.getX()+x);
-        dialog.setY(primaryStage.getY()+36);
-
-        dialog.setScene(new Scene(new VBox(contentLabel), TRANSPARENT));
-
-        // Use Timeline for a delayed closing effect
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(3.5), event -> {
-//                    System.out.println("Timeline finished, closing dialog.");
-                    dialog.close();
-                })
-        );
-        timeline.play();
-
-
-        dialog.initOwner(primaryStage);
-
-        dialog.showAndWait();
-    }
-    private void showCustomSuccessInfoAlert(String content, Stage primaryStage) {
-        Stage dialog = new Stage();
-        dialog.initOwner(primaryStage);
-
-        // Customize the appearance
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setResizable(false);
-
-        Label contentLabel = new Label(content);
-//        contentLabel.setStyle("-fx-font-size: 14px;");
-        contentLabel.setStyle("-fx-background-color: green;-fx-padding: 3px,3px,3px,3px;-fx-text-fill: white;");
-        contentLabel.setFont(new Font("times new roman",18));
-
-        dialog.setX(primaryStage.getX()+1100);
-        dialog.setY(primaryStage.getY()+95);
-
-        dialog.setScene(new Scene(new VBox(contentLabel), TRANSPARENT));
-
-        // Use Timeline for a delayed closing effect
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(3), event -> {
-//                    System.out.println("Timeline finished, closing dialog.");
-                    dialog.close();
-                })
-        );
-        timeline.play();
-
-
-        dialog.initOwner(primaryStage);
-
-        dialog.showAndWait();
-    }
-
-
 
 
     @FXML
-    private void setPasswordShow() {
+    private void setPasswordShow() throws IOException {
 //        System.out.println(passwordShow.isSelected());
         passwordShow.setSelected(passwordShow.isSelected());
         updateToggleButtonIcon();
     }
 
-    private void updateToggleButtonIcon() {
+    private void updateToggleButtonIcon() throws IOException {
         Image icon;
         if (passwordShow.isSelected()) {
 
             // Use the hide icon
-            icon = new Image(getClass().getResource("/todoapp/todo/eye-off.png").toExternalForm());
+            icon = new Image(getClass().getResource("/todoapp/todo/login/icons/eye-off.png").toExternalForm());
             if (icon != null ) {
 
                     passwordField.setVisible(false);
@@ -247,14 +174,16 @@ public class ToDoLoginController {
 
 
             } else {
-                System.out.println("Image not found: /todoapp/todo/eye.png");
+                DialogueController controller=new DialogueController();
+
+                controller.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye-off.png",410,33,.5);
 
             }
 
 
         } else {
             // Use the show icon
-            icon = new Image(getClass().getResource("/todoapp/todo/eye.png").toExternalForm());
+            icon = new Image(getClass().getResource("/todoapp/todo/login/icons/eye.png").toExternalForm());
             if (icon != null) {
                 passwordField.setVisible(true);
                 passwordField.setText(visiblePasswordField.getText());
@@ -262,7 +191,9 @@ public class ToDoLoginController {
                 iconField.setImage(icon);
 
             } else {
-                System.out.println("Image not found: /todoapp/todo/eye.png");
+                DialogueController controller=new DialogueController();
+
+                controller.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye.png",410,33,.5);
             }
 
 
@@ -271,7 +202,7 @@ public class ToDoLoginController {
 
     }
     @FXML
-    private void loginKeyHandle(KeyEvent event){
+    private void loginKeyHandle(KeyEvent event) throws IOException {
         if(event.getCode()== KeyCode.ENTER){
             handleLoginButtonAction();
         }

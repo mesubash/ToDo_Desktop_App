@@ -54,30 +54,23 @@ public class MainController {
 
     public void initialize() {
         topusernameField.setText("Hey, " + User.getUsername());
-//        selectedfieldshow.setStyle("-fx-background-color:  #708090;-fx-text-fill: white;");
-
         loadTasks();  // Load existing tasks when the controller is initialized
     }
     @FXML
     private void setSelectedfieldshowAll(){
         selectedfieldshow.setText(taskButton.getText());
-//        taskButton.setStyle("-fx-background-color:  #708090;-fx-text-fill: white;");
         loadTasks();
     }
 
     @FXML
     private void setSelectedfieldshowC() {
         selectedfieldshow.setText(completedTaskButton.getText());
-//        completedTaskButton.setStyle("-fx-background-color:  green;-fx-text-fill: white;");
-
         loadTasks();  // Load completed tasks
     }
 
     @FXML
     private void setSelectedfieldshowI() {
         selectedfieldshow.setText(importantTaskButton.getText());
-
-
         loadTasks();  // Load important tasks
     }
 
@@ -92,11 +85,14 @@ public class MainController {
             taskField.clear();
             if (inserted > 0) {
                 loadTasks();
+                DialogueController controller=new DialogueController();
+                controller.showSuccessDialogue(mainApp.getPrimaryStage(),"New Task Added",1095,95,2.1);
 
-                showCustomInfoAlert("New task added!",mainApp.getPrimaryStage(),1100,95,2.9,Color.GREEN);
+            } else {
+                DialogueController controller = new DialogueController();
+                controller.showErrorDialogue(mainApp.getPrimaryStage(), "Error Adding Task", 1095, 95, 2.1);
 
-            } else
-                showCustomInfoAlert("Error Insertion",mainApp.getPrimaryStage(),1100,95,2.9,Color.RED);
+            }
         }
     }
 
@@ -113,7 +109,7 @@ public class MainController {
 
     private void addTaskContainer(String taskText, Task task) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskContainer.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("task/TaskContainer.fxml"));
             HBox taskContainer = loader.load();
 
             TaskContainerController taskContainerController = loader.getController();
@@ -132,21 +128,13 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
     private MainApp mainApp;
-    private ToDoLoginController loginController;
-
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
     public Stage getStage(){
         return mainApp.getPrimaryStage();
     }
-
-    public void setLoginController(ToDoLoginController loginController) {
-        this.loginController = loginController;
-    }
-
 
     @FXML
     private void handleLogout() {
@@ -164,24 +152,16 @@ public class MainController {
             if (response == buttonTypeYes) {
 
                     try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
-                        Parent root = loader.load();
-
-                        // Set MainApp reference in ToDoLoginController
-                        ToDoLoginController loginController = loader.getController();
-                        loginController.setMainApp(mainApp);
-
-                        Scene scene = new Scene(root);
-
-                        Stage primaryStage = mainApp.getPrimaryStage();
-                        primaryStage.setScene(scene);
-                        primaryStage.setTitle("ToDo App - Login");
-                        primaryStage.show();
+                        mainApp.showLoginScene();
 
                         Platform.runLater(() -> {
-                            showCustomInfoAlert("Logged out successfully!",primaryStage,420,36,3.5,Color.RED);
+                            DialogueController controller=new DialogueController();
+                            try {
+                                controller.showSuccessDialogue(mainApp.getPrimaryStage(),"Logged Out!",420,36,2);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         });
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -190,42 +170,6 @@ public class MainController {
 
         });
 
-    }
-
-
-
-    private void showCustomInfoAlert(String content, Stage primaryStage,double x,double y,double duration,Color customColor) {
-        Stage dialog = new Stage();
-
-        dialog.initOwner(primaryStage);
-
-        // Customize the appearance
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setResizable(false);
-
-        Label contentLabel = new Label(content);
-        contentLabel.setBackground(Background.fill(customColor));
-        contentLabel.setStyle("-fx-text-fill: white;-fx-padding: 3px,3px,3px,3px;");
-        contentLabel.setFont(new Font("Times new roman",16));
-        dialog.setX(primaryStage.getX()+x);
-        dialog.setY(primaryStage.getY()+y);
-
-
-        dialog.setScene(new Scene(new VBox(contentLabel), Color.TRANSPARENT));
-
-        // Use Timeline for a delayed closing effect
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(duration), event -> {
-//                    System.out.println("Timeline finished, closing dialog.");
-                    dialog.close();
-                })
-        );
-        timeline.play();
-
-
-        dialog.initOwner(primaryStage);
-
-        dialog.showAndWait();
     }
 
     private boolean shiftPressed;
@@ -252,8 +196,4 @@ public class MainController {
             shiftPressed = false;
         }
     }
-
-
-
-
 }

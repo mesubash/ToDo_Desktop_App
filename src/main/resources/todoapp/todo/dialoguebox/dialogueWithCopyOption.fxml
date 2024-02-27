@@ -18,7 +18,7 @@
                   <children>
                       <ImageView fitHeight="38.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@success.png" />
+                              <Image url="@icons/success.png" />
                           </image>
                           <HBox.margin>
                               <Insets bottom="1.0" left="3.0" right="1.0" top="2.0" />
@@ -39,7 +39,7 @@
                <children>
                   <ImageView fitHeight="29.0" fitWidth="25.0" opacity="0.46" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@info.png" />
+                        <Image url="@icons/info.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="1.0" left="10.0" right="1.0" top="20.0" />

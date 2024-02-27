@@ -14,13 +14,13 @@
             <children>
                 <ImageView fitHeight="38.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@success.png" />
+                        <Image url="@icons/success.png" />
                     </image>
                     <HBox.margin>
                         <Insets bottom="1.0" left="3.0" right="1.0" top="2.0" />
                     </HBox.margin>
                 </ImageView>
-                <Label fx:id="successLabel" mouseTransparent="true" nodeOrientation="LEFT_TO_RIGHT" opacity="0.79" prefHeight="39.0" prefWidth="149.0" style="-fx-background-color: lightgrey;" text="Success" textFill="#1e8f2d">
+                <Label fx:id="successLabel" mouseTransparent="true" nodeOrientation="LEFT_TO_RIGHT" opacity="0.79" prefHeight="39.0" prefWidth="149.0" style="-fx-background-color: lightgrey;" text="Success" textFill="#1e8f2d" wrapText="true">
                     <padding>
                         <Insets left="7.0" />
                     </padding>

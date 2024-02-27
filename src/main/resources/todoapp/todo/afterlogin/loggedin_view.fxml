@@ -61,7 +61,7 @@
                <children>
                   <ImageView fitHeight="59.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@pngicon.png" />
+                        <Image url="@icons/pngicon.png" />
                      </image></ImageView>
 
                   <Label alignment="CENTER" prefHeight="56.0" prefWidth="122.0" text="ToDo">
@@ -84,7 +84,7 @@
                             <items>
                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                               <Image url="@verified_user.jpg" />
+                               <Image url="@icons/verified_user.jpg" />
                            </image>
                         </ImageView>
                         <Label fx:id="topusernameField" contentDisplay="CENTER" nodeOrientation="RIGHT_TO_LEFT" prefHeight="27.0" prefWidth="129.0" text="username" textFill="#7701aa" wrapText="true">

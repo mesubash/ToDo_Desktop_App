@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -139,44 +140,22 @@ public class TaskContainerController {
 
                 if (rowsAffected > 0) {
                     mainController.loadTasks();
-                    showCustomDialogue("Successfully Deleted",Color.GREEN);
+                    DialogueController controller=new DialogueController();
+                    try {
+                        controller.showSuccessDialogue(mainController.getStage(),"Task Deleted",1095,95,2.1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
-                    showCustomDialogue("Failed to delete task: ",Color.RED);
+                    DialogueController controller=new DialogueController();
+                    try {
+                        controller.showErrorDialogue(mainController.getStage(),"Can't Delete Task",1095,95,2.1);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
-    }
-    private void showCustomDialogue(String content,Color customColor){
-        Stage primaryStage=mainController.getStage();
-
-        Stage dialog = new Stage();
-        dialog.initOwner(primaryStage);
-
-        // Customize the appearance
-        dialog.initStyle(StageStyle.UNDECORATED);
-        dialog.setResizable(false);
-
-        Label contentLabel = new Label(content);
-        contentLabel.setBackground(Background.fill(customColor));
-        contentLabel.setStyle("-fx-text-fill: white;-fx-padding: 3px,3px,3px,3px;");
-        contentLabel.setFont(new Font("Times new roman",16));
-        dialog.setX(primaryStage.getX()+1100);
-        dialog.setY(primaryStage.getY()+95);
-
-
-        dialog.setScene(new Scene(new Group(new VBox(contentLabel)), Color.TRANSPARENT));
-
-
-        // Use Timeline for a delayed closing effect
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(2), event -> {
-//                    System.out.println("Timeline finished, closing dialog.");
-                    dialog.close();
-                })
-        );
-        timeline.play();
-        dialog.showAndWait();
-
     }
     @FXML
     private void onHoverEffect(){

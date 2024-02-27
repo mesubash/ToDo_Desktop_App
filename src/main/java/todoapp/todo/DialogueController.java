@@ -4,20 +4,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import javafx.util.Duration;
-import javafx.scene.input.Clipboard.*;
-
-import java.io.IOException;
+import java.io.*;
 
 public class DialogueController {
     @FXML
@@ -38,15 +31,15 @@ public class DialogueController {
     }
 
     public void showSuccessDialogue(Stage primaryStage, String message, int x, int y,double duratiom) throws IOException {
-        showDialogue(primaryStage, "Success.fxml", message, x, y,duratiom);
+        showDialogue(primaryStage, "dialoguebox/Success.fxml", message, x, y,duratiom);
     }
 
     public void showErrorDialogue(Stage primaryStage, String message, int x, int y,double duration) throws IOException {
-        showDialogue(primaryStage, "Error.fxml", message, x, y,duration);
+        showDialogue(primaryStage, "dialoguebox/Error.fxml", message, x, y,duration);
     }
 
     public void showCopyDialogue(Stage primaryStage,int x, int y,double duration) throws IOException{
-        showDialogue(primaryStage,"dialogueWithCopyOption.fxml","",x,y,duration);
+        showDialogue(primaryStage,"dialoguebox/dialogueWithCopyOption.fxml","",x,y,duration);
     }
 
     private void showDialogue(Stage primaryStage, String fxmlPath, String message, int x, int y, double duration) throws IOException {
@@ -55,9 +48,9 @@ public class DialogueController {
         Parent root = loader.load();
 
         DialogueController controller = loader.getController();
-        if (fxmlPath.equals("Error.fxml")) {
+        if (fxmlPath.equals("dialoguebox/Error.fxml")) {
             controller.setErrorLabel(message);
-        } else if (fxmlPath.equals("Success.fxml")) {
+        } else if (fxmlPath.equals("dialoguebox/Success.fxml")) {
             controller.setSuccessLabel(message);
         } else {
             controller.setPasswordField(password);
@@ -114,8 +107,6 @@ public class DialogueController {
                     new KeyFrame(Duration.seconds(1.3), event -> dialogStage.close())
             );
             timeline.play();
-
-
 
     }
 

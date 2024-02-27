@@ -28,7 +28,7 @@ public class MainApp extends Application {
 
     public void showLoginScene() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login/login-view.fxml"));
             Parent root = loader.load();
 
             ToDoLoginController loginController = loader.getController();
@@ -50,7 +50,7 @@ public class MainApp extends Application {
 
     public void showMainScene() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("loggedin_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("afterlogin/loggedin_view.fxml"));
             Parent root = loader.load();
 //            MainController.handleSuccessfulLogin();
             MainController mainController = loader.getController();
@@ -72,7 +72,7 @@ public class MainApp extends Application {
     }
     public void showForgetPasswordScene(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPassword.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("forgetpassword/ForgetPassword.fxml"));
             Parent root = loader.load();
 
             ForgetPasswordController forgetPasswordController = loader.getController();
@@ -92,7 +92,7 @@ public class MainApp extends Application {
     }
     public void showRegisterScene(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("register/Register.fxml"));
             Parent root = loader.load();
 
             RegisterController registerController = loader.getController();
@@ -113,7 +113,7 @@ public class MainApp extends Application {
     }
     public void showNextScene(String email) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("nextForgetView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("forgetpassword/nextForgetView.fxml"));
             Parent root = loader.load();
 
             ForgetPasswordController controller = loader.getController();
