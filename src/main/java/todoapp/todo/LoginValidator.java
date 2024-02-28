@@ -9,7 +9,6 @@ public class LoginValidator {
         public static boolean validateLogin(Connection connection, String username, String enteredPassword, String npassword) throws Exception {
                 PreparedStatement preparedStatement = null;
                 ResultSet resultSet = null;
-
                 try {
                         String sql = "SELECT * FROM users WHERE BINARY username=? OR email=?";
                         preparedStatement = connection.prepareStatement(sql);
@@ -30,7 +29,6 @@ public class LoginValidator {
                                         u.setUsername(resultSet.getString("username"));
                                         u.setU_id(resultSet.getInt("u_id"));
                                         u.setName(resultSet.getString("name"));
-
                                 }
 
                                 return result;
@@ -47,4 +45,5 @@ public class LoginValidator {
                         if (preparedStatement != null) preparedStatement.close();
                 }
         }
+
 }

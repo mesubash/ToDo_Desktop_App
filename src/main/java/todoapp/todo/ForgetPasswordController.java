@@ -7,8 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import todoapp.todo.DatabaseConnection;
-import todoapp.todo.DialogueController;
 import todoapp.todo.MailSender.CodeStore;
 import todoapp.todo.MailSender.GmailMain;
 
@@ -20,16 +18,14 @@ import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.regex.Pattern;
 import javafx.concurrent.Task;
-import todoapp.todo.MainApp;
-import todoapp.todo.UpdatePassword;
 
-import static todoapp.todo.MailSender.CodeStore.getUserIdByEmail;
+
 
 public class ForgetPasswordController {
     static MainApp mapp;
+    String htmlMailBody;
 
     public static void setMainApp(MainApp mainApp) {
         mapp = mainApp;
@@ -143,8 +139,24 @@ public class ForgetPasswordController {
                         @Override
                         protected Boolean call() throws Exception {
                             setEmail(emailField.getText());
+                            GmailMain.generateCode();
+                            String generatedCode = GmailMain.getGeneratedCode();
+                            CodeStore.storeCodeInDatabase(e, generatedCode);
 
-                            return sendMail();
+                            htmlMailBody="<html><head>\n" +
+                                    "    <title>Password Reset Verification</title>\n" +
+                                    "</head>\n" +
+                                    "\n" +
+                                    "<body>\n" +
+                                    "    <h2>Password Reset Verification</h2>\n" +
+                                    "    <p>Dear "+getName(email)+",</p>\n" +
+                                    "    <p>We have received a request to reset the password associated with your account. To proceed with the password reset, please use the following verification code:</p>\n" +
+                                    "    <p><strong>Verification Code:</strong>"+generatedCode+"</p>\n" +
+                                    "    <p>Please enter this code on the password reset page to verify your identity and complete the password reset process. Note that this code is valid for 5 minutes for security reasons. If the code expires, you can request a new one on the password reset page.</p>\n" +
+                                    "    <p>If you did not initiate this password reset request, please disregard this email. Your account security is important to us.</p>\n" +
+                                    "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
+                                    "</body></html>";
+                            return sendMail(htmlMailBody);
                         }
                     };
 
@@ -233,7 +245,7 @@ public class ForgetPasswordController {
     private boolean validateEmail(String email) throws Exception {
         boolean found = false;
         Connection cn = DatabaseConnection.getConnection();
-        String statement = "SELECT u.u_id, v.validation_code FROM users u LEFT JOIN validation_keys v ON u.u_id = v.user_id WHERE u.email=?";
+        String statement = "SELECT u.email, v.validation_code FROM users u LEFT JOIN validation_keys v ON u.email = v.email WHERE u.email=?";
 
         if (cn != null) {
             PreparedStatement ps = cn.prepareStatement(statement);
@@ -256,7 +268,7 @@ public class ForgetPasswordController {
             NextEmail.setEditable(false);
         } else {
             DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Email set fail",415,41,4);
+            controller.showErrorDialogue(mapp.getPrimaryStage(),"Email sent fail",415,41,4);
         }
     }
     @FXML
@@ -292,7 +304,6 @@ public class ForgetPasswordController {
               controller.setPassword(password);
               controller.showCopyDialogue(mapp.getPrimaryStage(),320,59,6);
               mapp.showLoginScene();
-
 
           }
           else {
@@ -396,7 +407,7 @@ public class ForgetPasswordController {
         }
     }
     private boolean validateCode() throws IOException {
-        String codereg = "[0-9]{4}";
+        String codereg = "[0-9]{6}";
         boolean result = false;
 
         if (!NextCodeField.getText().trim().isEmpty() && !NextCodeField.getText().isEmpty()) {
@@ -425,11 +436,11 @@ public class ForgetPasswordController {
         return storedCode != null && storedCode.equals(String.valueOf(enteredCode));
     }
 
-    private boolean sendMail() throws MessagingException {
+    private boolean sendMail(String htmlContent) throws MessagingException {
         try {
+
             GmailMain.setEmail(email);
-//            GmailMain.setUser();
-            return GmailMain.initialize();
+            return GmailMain.sendEmail(htmlContent,"Forget Password");
         } catch (MessagingException e) {
             e.printStackTrace();
             // Handle messaging exception
@@ -454,17 +465,30 @@ public class ForgetPasswordController {
                     // Fetch the existing email and user ID associated with the email
                     String userEmail = GmailMain.getTo();
 
-                    int userId = getUserIdByEmail(userEmail);
 
                     // Generate a new code using GmailMain logic
                     GmailMain.generateCode();
-                    String newCode = GmailMain.getGeneratedCode();
+                    String generatedCode = GmailMain.getGeneratedCode();
 
                     // Update the validation code in the database
-                    CodeStore.storeCodeInDatabase(userEmail, newCode);
+                    CodeStore.storeCodeInDatabase(userEmail, generatedCode);
 
                     // Resend the email with the new validation code using GmailMain logic
-                    GmailMain.sendEmail();
+                    htmlMailBody = "<html><head>\n" +
+                            "    <title>Password Reset Verification</title>\n" +
+                            "</head>\n" +
+                            "\n" +
+                            "<body>\n" +
+                            "    <h2>Password Reset Verification</h2>\n" +
+                            "    <p>Dear "+getName(userEmail)+",</p>\n" +
+                            "    <p>We have received a request to reset the password associated with your account. To proceed with the password reset, please use the following verification code:</p>\n" +
+                            "    <p><strong>Verification Code:</strong>"+generatedCode+"</p>\n" +
+                            "    <p>Please enter this code on the password reset page to verify your identity and complete the password reset process. Note that this code is valid for 5 minutes for security reasons. If the code expires, you can request a new one on the password reset page.</p>\n" +
+                            "    <p>If you did not initiate this password reset request, please disregard this email. Your account security is important to us.</p>\n" +
+                            "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
+                            "</body></html>";
+                    String subject="Forget Password";
+                    GmailMain.sendEmail(htmlMailBody,subject);
 
                     DialogueController controller = new DialogueController();
                     controller.showSuccessDialogue(mapp.getPrimaryStage(),"Code resent.",415,41,2);
@@ -490,12 +514,34 @@ public class ForgetPasswordController {
                 controller.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2.5);
             }
 
-        } catch (SQLException | MessagingException e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
             // Handle database errors or provide appropriate feedback
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    //getname
+    public static String getName(String email) {
+        try {
+            Connection cn=DatabaseConnection.getConnection();
+            if(cn!=null){
+                PreparedStatement ps=cn.prepareStatement("SELECT name FROM users WHERE email = ?");
+                ps.setString(1,email);
+                ResultSet i=ps.executeQuery();
+                if(i.next()){
+                    String name=i.getString("name");
+                    return name;
+                }
+
+            }
+        }catch (Exception e){
+
+        }
+        return "user";
     }
 
 }

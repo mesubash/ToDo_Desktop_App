@@ -24,6 +24,12 @@ public class DialogueController {
     @FXML
     public Button closeButton;
 
+    //info dialogue
+    @FXML
+    private Label upperLabel;
+    @FXML
+    private Label lowerLabel;
+
     private Stage dialogStage;
     private String password;
     public void setPassword(String password){
@@ -31,18 +37,21 @@ public class DialogueController {
     }
 
     public void showSuccessDialogue(Stage primaryStage, String message, int x, int y,double duratiom) throws IOException {
-        showDialogue(primaryStage, "dialoguebox/Success.fxml", message, x, y,duratiom);
+        showDialogue(primaryStage, "dialoguebox/Success.fxml", message,"", x, y,duratiom);
     }
 
     public void showErrorDialogue(Stage primaryStage, String message, int x, int y,double duration) throws IOException {
-        showDialogue(primaryStage, "dialoguebox/Error.fxml", message, x, y,duration);
+        showDialogue(primaryStage, "dialoguebox/Error.fxml", message,"", x, y,duration);
     }
 
     public void showCopyDialogue(Stage primaryStage,int x, int y,double duration) throws IOException{
-        showDialogue(primaryStage,"dialoguebox/dialogueWithCopyOption.fxml","",x,y,duration);
+        showDialogue(primaryStage,"dialoguebox/dialogueWithCopyOption.fxml","","",x,y,duration);
+    }
+    public void showInfoDialogue(Stage primaryStage,String firstLabel,String secondLabel,int x, int y,double duration) throws IOException{
+        showDialogue(primaryStage,"dialoguebox/info.fxml",firstLabel,secondLabel,x,y,duration);
     }
 
-    private void showDialogue(Stage primaryStage, String fxmlPath, String message, int x, int y, double duration) throws IOException {
+    private void showDialogue(Stage primaryStage, String fxmlPath, String message,String anotherMessage, int x, int y, double duration) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 
         Parent root = loader.load();
@@ -52,7 +61,11 @@ public class DialogueController {
             controller.setErrorLabel(message);
         } else if (fxmlPath.equals("dialoguebox/Success.fxml")) {
             controller.setSuccessLabel(message);
-        } else {
+        }
+        else if(fxmlPath.equals("dialoguebox/info.fxml")){
+            controller.setLabels(message,anotherMessage);
+
+        }else {
             controller.setPasswordField(password);
         }
 
@@ -85,7 +98,11 @@ public class DialogueController {
     }
     private void setPasswordField(String password){
         passwordLabel.setText(password);
-
+    }
+    //info dialogue
+    private void setLabels(String upper,String lower){
+        upperLabel.setText(upper);
+        lowerLabel.setText(lower);
     }
 
     @FXML

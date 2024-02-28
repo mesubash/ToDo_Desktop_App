@@ -3,7 +3,6 @@ package todoapp.todo;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
-import static todoapp.todo.MailSender.CodeStore.getUserIdByEmail;
 
 public class UpdatePassword {
     public static boolean updatePassword(String password,String email) {
@@ -11,11 +10,11 @@ public class UpdatePassword {
             System.out.println(email);
             System.out.println(password);
             Connection cn=DatabaseConnection.getConnection();
-            String query = "UPDATE users SET password = ? WHERE u_id = ?";
+            String query = "UPDATE users SET password = ? WHERE email = ?";
             PreparedStatement preparedStatement=cn.prepareStatement(query);
-            int u_id=getUserIdByEmail(email);
+
             preparedStatement.setString(1,hashPassword(password));
-            preparedStatement.setInt(2,u_id);
+            preparedStatement.setString(2,email);
             int i=preparedStatement.executeUpdate();
                 if(i>0){
                     return true ;

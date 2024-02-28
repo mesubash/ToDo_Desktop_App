@@ -39,7 +39,7 @@
         <opaqueInsets>
             <Insets />
          </opaqueInsets></TextField>
-        <RadioButton layoutX="191.0" layoutY="246.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="112.0" text="Remember me" textFill="#7d2ae8">
+        <RadioButton fx:id="rememberMeRadioButton" layoutX="191.0" layoutY="246.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="112.0" text="Remember me" textFill="#7d2ae8">
             <font>
                 <Font name="Segoe UI" size="10.0" />
             </font>

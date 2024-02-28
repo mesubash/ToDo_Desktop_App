@@ -7,8 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import todoapp.todo.*;
-
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,6 +34,9 @@ public class ToDoLoginController {
     private Label usererr;
     @FXML
     private  Label passworderr;
+
+    @FXML
+    private RadioButton rememberMeRadioButton;
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -65,7 +66,6 @@ public class ToDoLoginController {
         String password = passwordField.getText();
         String npassword = visiblePasswordField.getText();
 
-
         try {
             String[] validationResults = ClientSideValidator.validate(usernameField, passwordField, visiblePasswordField);
 
@@ -73,31 +73,29 @@ public class ToDoLoginController {
                 // Use try-with-resources to automatically close the connection
                 try (Connection connection = DatabaseConnection.getConnection()) {
                     if (connection != null) {
-                        boolean valid = LoginValidator.validateLogin(connection, username, password,npassword);
+                        boolean valid = LoginValidator.validateLogin(connection, username, password, npassword);
 
                         if (valid) {
 
+                            // Check if Remember Me is selected
                             mainApp.showMainScene();
                             showSuccess();
                         } else {
                             clearFields();
-                            DialogueController controller=new DialogueController();
-                            controller.showErrorDialogue(mainApp.getPrimaryStage(),"Invalid credential",410,33,2);
+                            DialogueController controller = new DialogueController();
+                            controller.showErrorDialogue(mainApp.getPrimaryStage(), "Invalid credential", 410, 33, 2);
                         }
                     } else {
                         // Database connection error, show error dialog
-                        DialogueController controller=new DialogueController();
-                        controller.showErrorDialogue(mainApp.getPrimaryStage(),"Database Connection error",410,33,2);
-
+                        DialogueController controller = new DialogueController();
+                        controller.showErrorDialogue(mainApp.getPrimaryStage(), "Database Connection error", 410, 33, 2);
                     }
-
 
                 } catch (SQLException | ClassNotFoundException e) {
                     // Database connection error, show error dialog
-                    DialogueController controller=new DialogueController();
-
-                    controller.showErrorDialogue(mainApp.getPrimaryStage(),"Database connection Error",410,33,2);
-//                    e.printStackTrace();
+                    DialogueController controller = new DialogueController();
+                    controller.showErrorDialogue(mainApp.getPrimaryStage(), "Database connection Error", 410, 33, 2);
+                    e.printStackTrace();
                 }
             } else {
                 // Handle empty fields based on the validation results
@@ -112,12 +110,11 @@ public class ToDoLoginController {
                 }
             }
         } catch (Exception e) {
-            DialogueController controller=new DialogueController();
-
-            controller.showErrorDialogue(mainApp.getPrimaryStage(),"Validation Error",410,33,2);
+            DialogueController controller = new DialogueController();
+            controller.showErrorDialogue(mainApp.getPrimaryStage(), "Validation Error", 410, 33, 2);
         }
-
     }
+
 
     @FXML
     private void handleForgetPassword(){

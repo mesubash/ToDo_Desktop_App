@@ -25,14 +25,6 @@ public class GmailMain {
     private static long validationPeriod = 5 * 60 * 1000;
     // set validation period as you need it
 
-    public static boolean initialize() throws MessagingException {
-        if (sendEmail()) {
-            CodeStore.storeCodeInDatabase(to, generatedCode);
-            return true;
-        }
-        return false;
-    }
-
 
     public static void setEmail(String extractedEmail) {
         to = extractedEmail;
@@ -49,7 +41,7 @@ public class GmailMain {
 
         // Generate a new code until a unique one is found
         do {
-            generatedCode = String.format("%04d", random.nextInt(9000) + 1000);
+            generatedCode = String.format("%06d", random.nextInt(900000) + 100000);
         } while (usedCodes.contains(generatedCode));
 
         // Record the timestamp when the code is generated
@@ -64,24 +56,10 @@ public class GmailMain {
         return generatedCode;
     }
 
-    public static boolean sendEmail() throws MessagingException {
+    public static boolean sendEmail(String htmlContent,String subject) throws MessagingException {
         GmailSender gmailSender = new GmailSender();
-        generateCode();
         String from = "tododesktopapp@gmail.com";
-        String subject = "Forget Password Request";
-        String htmlContent = "<html><head>\n" +
-                                "    <title>Password Reset Verification</title>\n" +
-                "</head>\n" +
-                "\n" +
-                "<body>\n" +
-                "    <h2>Password Reset Verification</h2>\n" +
-                "    <p>Dear "+getName()+",</p>\n" +
-                "    <p>We have received a request to reset the password associated with your account. To proceed with the password reset, please use the following verification code:</p>\n" +
-                "    <p><strong>Verification Code:</strong>"+generatedCode+"</p>\n" +
-                "    <p>Please enter this code on the password reset page to verify your identity and complete the password reset process. Note that this code is valid for 5 minutes for security reasons. If the code expires, you can request a new one on the password reset page.</p>\n" +
-                "    <p>If you did not initiate this password reset request, please disregard this email. Your account security is important to us.</p>\n" +
-                "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
-                "</body></html>";
+
 
         try {
             // Check for network connectivity
@@ -140,23 +118,6 @@ public class GmailMain {
     public static String getTo() {
         return to;
     }
-    private static String getName() {
-        try {
-            Connection cn=DatabaseConnection.getConnection();
-            if(cn!=null){
-                PreparedStatement ps=cn.prepareStatement("SELECT name FROM users WHERE email = ?");
-                ps.setString(1,to);
-                ResultSet i=ps.executeQuery();
-                if(i.next()){
-                    String name=i.getString("name");
-                    return name;
-                }
 
-            }
-        }catch (Exception e){
-
-        }
-        return "null ";
-    }
 
 }

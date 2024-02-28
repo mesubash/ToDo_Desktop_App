@@ -8,7 +8,7 @@ public class DatabaseConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_desktop_app", "root", "");
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/todo_desktop_app", "root", "thehandsome");
 
             return cn;
         } catch (ClassNotFoundException | SQLException e) {

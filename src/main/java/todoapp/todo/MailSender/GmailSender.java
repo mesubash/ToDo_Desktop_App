@@ -1,17 +1,14 @@
 package todoapp.todo.MailSender;
 
+import todoapp.todo.RegisterController;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.Files;
-import java.io.IOException;
-import java.util.List;
 
 public class GmailSender {
-    public boolean sendMail(String from, String to, String subject, String htmlContent) throws MessagingException {
+    public static boolean sendMail(String from, String to, String subject, String htmlContent) throws MessagingException {
         boolean success = false;
 
         // logic

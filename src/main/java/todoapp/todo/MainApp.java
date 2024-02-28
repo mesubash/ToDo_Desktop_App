@@ -6,14 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class MainApp extends Application {
 
     private Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SQLException {
         this.primaryStage = primaryStage;
-        showLoginScene();
+//       y
+            showLoginScene();
     }
 
     public void showLoginScene() {
@@ -38,24 +42,22 @@ public class MainApp extends Application {
     }
 
 
-    public void showMainScene() {
+    protected void showMainScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("afterlogin/loggedin_view.fxml"));
             Parent root = loader.load();
-//            MainController.handleSuccessfulLogin();
+
             MainController mainController = loader.getController();
             mainController.setMainApp(this);
+//            mainController.setUserId(userId); // Pass the user ID to the controller
             Scene scene = new Scene(root);
 
             primaryStage.setMaximized(true);
             primaryStage.setResizable(false);
-
             primaryStage.setScene(scene);
             primaryStage.setTitle("ToDo App - Main");
 
             primaryStage.show();
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -121,6 +123,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+
 
     public Stage getPrimaryStage() {
         return primaryStage;
