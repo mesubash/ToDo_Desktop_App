@@ -65,6 +65,9 @@ public class RegisterController {
     @FXML
     private Label cpassworderr;
 
+    //for cusmtom dialogue box
+    DialogueController dialogueController = new DialogueController();
+
     String emptyMessage="*this field cannot be empty";
     String noMatchMessage="*doesn't match the pattern";
     String inValidType="*invalid number";
@@ -155,8 +158,7 @@ public class RegisterController {
             sendEmailVerifCode(firstnameText, emailAddress);
             codeBox.setDisable(false);
         }else{
-            DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",395,35,2);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",395,35,2);
         }
 
     }
@@ -177,7 +179,7 @@ public class RegisterController {
                 "    </div>\n" +
                 "\n" +
                 "    <div style=\"padding: 20px;\">\n" +
-                "        <p>Dear"+firstnameText+",</p>\n" +
+                "        <p>Dear "+firstnameText+",</p>\n" +
                 "        <p>Thank you for joining our platform! To ensure the security of your account, we require you to verify your email address. Your email, "+emailAddress+" has been added to our system, and we're excited to have you on board.</p>\n" +
                 "        <p>Please use the following verification code to complete the registration process:</p>\n" +
                 "\n" +
@@ -196,8 +198,7 @@ public class RegisterController {
                 "</html>";
         String subject="Register Verification";
         if(GmailMain.sendEmail(htmlContent,subject)){
-            DialogueController controller = new DialogueController();
-            controller.showSuccessDialogue(mapp.getPrimaryStage(),"code sent in mail",391,35,1);
+            dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"code sent in mail",391,35,1);
             CodeStore.storeCodeInDatabase(emailAddress,generatedCode);
         }
 
@@ -210,20 +211,17 @@ public class RegisterController {
             System.out.println("Entered code: " + code);
             if (ifCodeValid(code)) {
                 if(GmailMain.isCodeValid()){
-                    DialogueController controller = new DialogueController();
-                    controller.showSuccessDialogue(mapp.getPrimaryStage(),"Valid Code",415,35,.4);
-                    controller.showInfoDialogue(mapp.getPrimaryStage(),"Register finish","Redirecting......",390,35,4);
+                    dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"Valid Code",415,35,.4);
+                    dialogueController.showInfoDialogue(mapp.getPrimaryStage(),"Register finish","Redirecting......",390,35,4);
                     registerButton.setDisable(false);
                     onRegisterClicked();
                 }
                 else{
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mapp.getPrimaryStage(),"Code expired.Request a new",415,35,2);
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Code expired.Request a new",415,35,2);
 
                 }
             } else {
-                DialogueController controller = new DialogueController();
-                controller.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Code",415,35,1.7);
+                dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Code",415,35,1.7);
             }
         }
     }
@@ -236,8 +234,7 @@ public class RegisterController {
                 try {
                     code = Integer.parseInt(codeField.getText());
                 } catch (Exception e) {
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Type of Code",415,35,2);
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Type of Code",415,35,2);
                     return false;
                 }
                 result = true;
@@ -400,15 +397,15 @@ public class RegisterController {
             ps.setString(1,email);
             ResultSet resultSet = ps.executeQuery();
             if(resultSet.next()){
-                if(resultSet.getInt(1)>1){
+                if(resultSet.getInt(1)>0){
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"email already registered",410,31,1);
                     return true;
                 }
                 return false;
             }
 
         }catch(Exception e){
-            DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Dbase connection failed",410,31,1.7);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Dbase connection failed",410,31,1.7);
 
         }
         return false;
@@ -491,8 +488,7 @@ public class RegisterController {
                     int i = ps.executeUpdate();
                     if (i > 0) {
                         mapp.showLoginScene();
-                        DialogueController controller = new DialogueController();
-                        controller.showSuccessDialogue(mapp.getPrimaryStage(),"User Registered!",230,31,2.1);
+                        dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"User Registered!",230,31,2.1);
                         String subject="Welcome "+name;
                         String htmlContent= "<html lang=\"en\">\n" +
                                 "<head>\n" +
@@ -518,16 +514,14 @@ public class RegisterController {
                         GmailMain.sendEmail(htmlContent,subject);
                     } else {
 
-                        DialogueController controller = new DialogueController();
-                        controller.showErrorDialogue(mapp.getPrimaryStage(),"Register Failed! Try Again",230,31,2.1);
+                        dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Register Failed! Try Again",230,31,2.1);
                         mapp.showLoginScene();
                     }
                 }
             }
         } catch (Exception e) {
-            DialogueController controller = new DialogueController();
 
-            controller.showErrorDialogue(mapp.getPrimaryStage(),e.getMessage(),410,31,1.7);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),e.getMessage(),410,31,1.7);
         }
     }
     private void onRegisterClicked() throws IOException {
@@ -536,8 +530,7 @@ public class RegisterController {
 
         }
         catch (Exception e){
-            DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Register Failed! Try Again",230,31,2.1);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Register Failed! Try Again",230,31,2.1);
             mapp.showRegisterScene();
 
 

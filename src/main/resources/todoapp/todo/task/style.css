@@ -1,0 +1,19 @@
+.completed-and-important-task{
+    -fx-background-color: orange;
+    -fx-text-fill: black;
+}
+.completed-task {
+    -fx-background-color: green;
+}
+
+.important-task {
+    -fx-background-color: #7d2ae8;
+}
+
+.default-task {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+.otherfields{
+    -fx-text-fill: white;
+}

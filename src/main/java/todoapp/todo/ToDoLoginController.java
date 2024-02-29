@@ -9,6 +9,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -37,6 +39,9 @@ public class ToDoLoginController {
 
     @FXML
     private RadioButton rememberMeRadioButton;
+
+    //for custum dialogue box
+    DialogueController dialoguebox = new DialogueController();
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -82,19 +87,16 @@ public class ToDoLoginController {
                             showSuccess();
                         } else {
                             clearFields();
-                            DialogueController controller = new DialogueController();
-                            controller.showErrorDialogue(mainApp.getPrimaryStage(), "Invalid credential", 410, 33, 2);
+                            dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(), "Invalid credential", 410, 33, 2);
                         }
                     } else {
                         // Database connection error, show error dialog
-                        DialogueController controller = new DialogueController();
-                        controller.showErrorDialogue(mainApp.getPrimaryStage(), "Database Connection error", 410, 33, 2);
+                        dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(), "Database Connection error", 410, 33, 2);
                     }
 
                 } catch (SQLException | ClassNotFoundException e) {
                     // Database connection error, show error dialog
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mainApp.getPrimaryStage(), "Database connection Error", 410, 33, 2);
+                    dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(), "Database connection Error", 410, 33, 2);
                     e.printStackTrace();
                 }
             } else {
@@ -110,30 +112,41 @@ public class ToDoLoginController {
                 }
             }
         } catch (Exception e) {
-            DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mainApp.getPrimaryStage(), "Validation Error", 410, 33, 2);
+            dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(), "Validation Error", 410, 33, 2);
         }
     }
 
 
     @FXML
-    private void handleForgetPassword(){
-        mainApp.showForgetPasswordScene();
+    private void handleForgetPassword() throws IOException {
+        if(isNetworkAvailable()){
+            mainApp.showForgetPasswordScene();
+        }
+        else{
+            dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(),"No Network Connection",395,35,2);
+
+        }
 
     }
 
     @FXML
-    private void handleRegister(){
+    private void handleRegister() throws IOException {
+        if(isNetworkAvailable()){
+            mainApp.showRegisterScene();
 
-        mainApp.showRegisterScene();
+        }
+        else{
+            dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(),"No Network Connection",395,35,2);
+
+        }
+
 
     }
 
 
 
     private void showSuccess() throws IOException {
-        DialogueController controller = new DialogueController();
-        controller.showSuccessDialogue(mainApp.getPrimaryStage(),"Login Successful",1100,93,1.3);
+        dialoguebox.showSuccessDialogue(mainApp.getPrimaryStage(),"Login Successful",1100,93,1.3);
 
     }
 
@@ -161,9 +174,8 @@ public class ToDoLoginController {
 
 
             } else {
-                DialogueController controller=new DialogueController();
 
-                controller.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye-off.png",410,33,.5);
+                dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye-off.png",410,33,.5);
 
             }
 
@@ -178,9 +190,8 @@ public class ToDoLoginController {
                 iconField.setImage(icon);
 
             } else {
-                DialogueController controller=new DialogueController();
 
-                controller.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye.png",410,33,.5);
+                dialoguebox.showErrorDialogue(mainApp.getPrimaryStage(),"Image not found: eye.png",410,33,.5);
             }
 
 
@@ -192,6 +203,15 @@ public class ToDoLoginController {
     private void loginKeyHandle(KeyEvent event) throws IOException {
         if(event.getCode()== KeyCode.ENTER){
             handleLoginButtonAction();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        try {
+            InetAddress.getByName("www.google.com");
+            return true; // Network is available
+        } catch (UnknownHostException e) {
+            return false; // Network is not available
         }
     }
 

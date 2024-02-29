@@ -1,5 +1,6 @@
 package todoapp.todo.MailSender;
 
+import todoapp.todo.DatabaseConnection;
 import todoapp.todo.RegisterController;
 
 import javax.mail.*;
@@ -45,6 +46,7 @@ public class GmailSender {
             success = true;
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
 
             e.printStackTrace();
         }

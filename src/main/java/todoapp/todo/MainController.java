@@ -37,6 +37,8 @@ public class MainController {
     private VBox tasksContainer;
     @FXML
     private Label taskButton;
+    //for custom dialogueBox
+    DialogueController dialogueController = new DialogueController();
 
     public void initialize() {
         topusernameField.setText("Hey, " + User.getUsername());
@@ -71,12 +73,10 @@ public class MainController {
             taskField.clear();
             if (inserted > 0) {
                 loadTasks();
-                DialogueController controller=new DialogueController();
-                controller.showSuccessDialogue(mainApp.getPrimaryStage(),"New Task Added",1095,95,2.1);
+                dialogueController.showSuccessDialogue(mainApp.getPrimaryStage(),"New Task Added",1095,95,2.1);
 
             } else {
-                DialogueController controller = new DialogueController();
-                controller.showErrorDialogue(mainApp.getPrimaryStage(), "Error Adding Task", 1095, 95, 2.1);
+                dialogueController.showErrorDialogue(mainApp.getPrimaryStage(), "Error Adding Task", 1095, 95, 2.1);
 
             }
         }
@@ -141,9 +141,8 @@ public class MainController {
                         mainApp.showLoginScene();
 
                         Platform.runLater(() -> {
-                            DialogueController controller=new DialogueController();
                             try {
-                                controller.showSuccessDialogue(mainApp.getPrimaryStage(),"Logged Out!",420,36,2);
+                                dialogueController.showSuccessDialogue(mainApp.getPrimaryStage(),"Logged Out!",420,36,2);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -155,7 +154,6 @@ public class MainController {
                 }
 
         });
-
     }
 
     private boolean shiftPressed;

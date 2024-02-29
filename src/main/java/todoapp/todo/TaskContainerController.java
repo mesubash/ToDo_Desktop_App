@@ -54,36 +54,34 @@ public class TaskContainerController {
         String formattedTimestamp = timestamp.format(formatter);
 
         tasktime.setText("created at: "+formattedTimestamp);
-
-
-        if (task.isCompleted()) {
-            // Set color to green for completed tasks
-            taskContainer.setStyle("-fx-background-color: green;");
-
-            taskLabel.setTextFill(Color.WHITE);
-
+        if (task.isCompleted() && task.isImportant()) {
+            taskContainer.getStyleClass().setAll("completed-and-important-task");
+            tasktime.setTextFill(Color.BLACK);
+        } else if (task.isCompleted()) {
+            taskContainer.getStyleClass().setAll("completed-task");
+            taskLabel.getStyleClass().setAll("otherfields");
+            tasktime.getStyleClass().setAll("otherfields");
             importantCheckbox.setTextFill(Color.WHITE);
+
             completedCheckbox.setTextFill(Color.WHITE);
-            tasktime.setTextFill(Color.WHITE);
+
 
 
         } else if (task.isImportant()) {
-            // Set color to purple for important tasks
-            taskContainer.setStyle("-fx-background-color: #7d2ae8;");
-
-            taskLabel.setTextFill(Color.WHITE);
+            taskContainer.getStyleClass().setAll("important-task");
+            taskLabel.getStyleClass().setAll("otherfields");
+            tasktime.getStyleClass().setAll("otherfields");
             importantCheckbox.setTextFill(Color.WHITE);
             completedCheckbox.setTextFill(Color.WHITE);
-            tasktime.setTextFill(Color.WHITE);
 
         } else {
-            // Reset the background color to the default for other tasks
-            taskContainer.setStyle("-fx-background-color:white;");
-            tasktime.setStyle("-fx-text-fill: #4A5F96");
-
-            taskLabel.setTextFill(Color.BLACK);
+            taskContainer.getStyleClass().setAll("default-task");
+            taskLabel.getStyleClass().remove("otherfields");
+            tasktime.getStyleClass().remove("otherfields");
             importantCheckbox.setTextFill(Color.BLACK);
             completedCheckbox.setTextFill(Color.BLACK);
+
+            // Set other styles if needed
         }
 
     }

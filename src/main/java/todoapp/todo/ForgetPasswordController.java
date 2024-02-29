@@ -30,8 +30,9 @@ public class ForgetPasswordController {
     public static void setMainApp(MainApp mainApp) {
         mapp = mainApp;
     }
-
+    CodeStore codeStore =new CodeStore();
     private String email;
+    DialogueController dialogueController= new DialogueController();
     private static String storedCode; // Store the code retrieved from the database
     public static void setStoredCode(String code){
         storedCode=code;
@@ -106,8 +107,7 @@ public class ForgetPasswordController {
     }
     private void checkNetwork() throws IOException {
         if (!isNetworkAvailable()) {
-            DialogueController controller=new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2.5);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2.5);
         }
         else {
 //            System.out.println("available");
@@ -129,7 +129,6 @@ public class ForgetPasswordController {
             String e=emailField.getText();
             if(!e.isEmpty()){
                 boolean found = validateEmail(e);
-
                 if (found) {
                     // Disable UI controls and show "Please wait" message
                     setUIControlsDisabled(true);
@@ -141,8 +140,6 @@ public class ForgetPasswordController {
                             setEmail(emailField.getText());
                             GmailMain.generateCode();
                             String generatedCode = GmailMain.getGeneratedCode();
-                            CodeStore.storeCodeInDatabase(e, generatedCode);
-
                             htmlMailBody="<html><head>\n" +
                                     "    <title>Password Reset Verification</title>\n" +
                                     "</head>\n" +
@@ -156,7 +153,13 @@ public class ForgetPasswordController {
                                     "    <p>If you did not initiate this password reset request, please disregard this email. Your account security is important to us.</p>\n" +
                                     "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
                                     "</body></html>";
-                            return sendMail(htmlMailBody);
+                           if(sendMail(htmlMailBody)){
+                            codeStore.storeCodeInDatabase(emailField.getText(), generatedCode);
+                            setStoredCode(generatedCode);
+                                return true;
+                            }
+                           else
+                               return false;
                         }
                     };
 
@@ -169,9 +172,8 @@ public class ForgetPasswordController {
                         if (sendMailTask.getValue()) {
                             // Proceed to the next scene only if mail is sent successfully
                             mapp.showNextScene(email);
-                            DialogueController controller = new DialogueController();
                             try {
-                                controller.showSuccessDialogue(mapp.getPrimaryStage(),"Code sent.",415,36,1.5);
+                                dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"Code sent.",415,36,1.5);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -196,6 +198,8 @@ public class ForgetPasswordController {
                 } else {
                     emailErr.setVisible(true);
                 }
+
+
             }else{
                 emailvalidateErr.setText("* this field cannot be empty");
                 emailvalidateErr.setVisible(true);
@@ -203,8 +207,7 @@ public class ForgetPasswordController {
             }
         }
         else {
-            DialogueController controller=new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2);
+          dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2);
 
         }
 
@@ -254,7 +257,8 @@ public class ForgetPasswordController {
             if (resultSet.next()) {
                 found = true;
                 // Retrieve the code from the database
-                storedCode = resultSet.getString("validation_code");
+                String code = resultSet.getString("validation_code");
+                setStoredCode(code);
             }
         }
 
@@ -267,8 +271,7 @@ public class ForgetPasswordController {
             NextEmail.setText(email);
             NextEmail.setEditable(false);
         } else {
-            DialogueController controller = new DialogueController();
-            controller.showErrorDialogue(mapp.getPrimaryStage(),"Email sent fail",415,41,4);
+            dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Email sent fail",415,41,4);
         }
     }
     @FXML
@@ -297,18 +300,17 @@ public class ForgetPasswordController {
 
               return;
           }
-          boolean updated= UpdatePassword.updatePassword(password,email);
+
+          boolean updated= UpdatePassword.updatePassword(password,email,mapp.getPrimaryStage());
           if(updated){
 
-              DialogueController controller=new DialogueController();
-              controller.setPassword(password);
-              controller.showCopyDialogue(mapp.getPrimaryStage(),320,59,6);
+              dialogueController.setPassword(password);
+              dialogueController.showCopyDialogue(mapp.getPrimaryStage(),320,59,6);
               mapp.showLoginScene();
 
           }
           else {
-              DialogueController controller=new DialogueController();
-              controller.showErrorDialogue(mapp.getPrimaryStage(),"Update Failed !",410,41,3.2);
+              dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Update Failed !",410,41,3.2);
               mapp.showLoginScene();
           }
 
@@ -388,21 +390,18 @@ public class ForgetPasswordController {
             System.out.println("Entered code: " + code);
             if (ifCodeValid(code)) {
                 if(GmailMain.isCodeValid()){
-                    DialogueController controller = new DialogueController();
-                    controller.showSuccessDialogue(mapp.getPrimaryStage(),"Valid Code",415,35,.7);
+                    dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"Valid Code",415,35,.7);
 
                 afterCodeValid.setDisable(false);
                 updateButton.setDisable(false);
                 resendCodeLink.setDisable(true);
                 }
                 else{
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mapp.getPrimaryStage(),"Code expired.Request a new",415,35,2);
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Code expired.Request a new",415,35,2);
 
                 }
             } else {
-                DialogueController controller = new DialogueController();
-                controller.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Code",415,35,1.7);
+                dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Code",415,35,1.7);
             }
         }
     }
@@ -415,8 +414,7 @@ public class ForgetPasswordController {
                 try {
                     code = Integer.parseInt(NextCodeField.getText());
                 } catch (Exception e) {
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Type of Code",415,35,2);
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Invalid Type of Code",415,35,2);
                     return false;
                 }
                 result = true;
@@ -431,7 +429,7 @@ public class ForgetPasswordController {
     }
 
     private boolean ifCodeValid(int enteredCode) {
-        System.out.println(storedCode);
+        System.out.println("Stored: "+storedCode);
         // Implement code validity check logic here
         return storedCode != null && storedCode.equals(String.valueOf(enteredCode));
     }
@@ -455,6 +453,7 @@ public class ForgetPasswordController {
     private void onResendCodeClicked() {
         try {
             if(isNetworkAvailable()){
+                resendCodeLink.setDisable(false);
                 if (canResend) {
                     // Set canResend to false when resend is initiated
                     canResend = false;
@@ -471,7 +470,6 @@ public class ForgetPasswordController {
                     String generatedCode = GmailMain.getGeneratedCode();
 
                     // Update the validation code in the database
-                    CodeStore.storeCodeInDatabase(userEmail, generatedCode);
 
                     // Resend the email with the new validation code using GmailMain logic
                     htmlMailBody = "<html><head>\n" +
@@ -488,10 +486,12 @@ public class ForgetPasswordController {
                             "    <p>Thank you, <br>Subash Singh Dhami</p>\n" +
                             "</body></html>";
                     String subject="Forget Password";
-                    GmailMain.sendEmail(htmlMailBody,subject);
+                    if(GmailMain.sendEmail(htmlMailBody,subject)){
+                        codeStore.storeCodeInDatabase(userEmail, generatedCode);
+                        setStoredCode(generatedCode);
+                    }
 
-                    DialogueController controller = new DialogueController();
-                    controller.showSuccessDialogue(mapp.getPrimaryStage(),"Code resent.",415,41,2);
+                    dialogueController.showSuccessDialogue(mapp.getPrimaryStage(),"Code resent.",415,41,2);
 
                     // Set up a PauseTransition to reset canResend to true after the cooldown period
                     PauseTransition pause = new PauseTransition(Duration.millis(RESEND_COOLDOWN));
@@ -504,14 +504,12 @@ public class ForgetPasswordController {
                     });
                     pause.play();
                 } else {
-                    DialogueController controller = new DialogueController();
-                    controller.showErrorDialogue(mapp.getPrimaryStage(),"Wait 30 second to resend.",415,41,1.5);
+                    dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Wait 30 second to resend.",415,41,1.5);
 
                 }
             }
             else {
-                DialogueController controller=new DialogueController();
-                controller.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2.5);
+                dialogueController.showErrorDialogue(mapp.getPrimaryStage(),"Network Error",415,41,2.5);
             }
 
         } catch (MessagingException e) {

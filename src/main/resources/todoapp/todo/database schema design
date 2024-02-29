@@ -29,3 +29,16 @@ CREATE TABLE validation_keys (
 INSERT INTO validation_keys (user_id, email, validation_code)
 VALUES (1, 'user@example.com', '1234')
 ON DUPLICATE KEY UPDATE validation_code = '5678';
+
+
+
+//to delete any user you have to delete the data from the child table too
+so
+  UPDATE tasks SET u_id = NULL WHERE u_id=(select u_id from users where email="example@gmail.com");
+ and then
+  DELETE FROM tasks WHERE u_id =(SELECT email FROM users WHERE email="example@gmail.com");
+
+
+now you can delete the user with above specified email
+DELETE FROM users WHERE email="example@gmail.com";
+

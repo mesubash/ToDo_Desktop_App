@@ -14,7 +14,6 @@ public class CodeStore {
         PreparedStatement preparedStatement = null;
 
         try {
-            // Your database connection logic (replace with your own database details)
             connection = DatabaseConnection.getConnection();
 
             // Fetch the u_id associated with the provided email
